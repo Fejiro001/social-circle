@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SocialCircle.BLL/SocialCircle.BLL.csproj" />
+  <Project Path="SocialCircle.DAL/SocialCircle.DAL.csproj" />
+  <Project Path="SocialCircle.Models/SocialCircle.Models.csproj" />
+  <Project Path="SocialCircle/SocialCircle.csproj" />
+</Solution>

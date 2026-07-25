@@ -5,14 +5,14 @@ namespace SocialCircle.BLL
 {
     public class UserService
     {
-        private readonly UserRepo _repo;
-        public UserService(UserRepo repo)
+        private readonly UserRepo _userRepo;
+        public UserService(UserRepo userRepo)
         {
-            _repo = repo;
+            _userRepo = userRepo;
         }
 
-        public List<User> GetAllUsers() => _repo.GetAllUsers();
+        public List<User> GetAllUsers() => _userRepo.GetAllUsers();
 
-        public User GetUserById(int userId) => _repo.GetUserById(userId);
+        public User GetUserById(int userId) => _userRepo.GetUserById(userId);
     }
 }

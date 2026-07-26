@@ -1,0 +1,48 @@
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: calc(100dvh - 60px);
+    padding: 0 1rem;
+}
+
+.logo-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-size: calc(1.625rem + 4.5vw); /* Responsive sizing similar to Bootstrap's display-2 */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 1200px) {
+    .hero-title {
+        font-size: 5rem;
+    }
+}
+
+.accent-primary {
+    color: var(--accent-primary);
+}
+
+.hero-subtitle {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}

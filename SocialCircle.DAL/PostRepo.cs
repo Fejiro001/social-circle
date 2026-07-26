@@ -10,14 +10,20 @@ namespace SocialCircle.DAL
             _context = context;
         }
 
-        public List<Post> GetFeedPosts(int currentUserId)
+        public List<Post> GetFeedPosts(List<int> userIds)
         {
-            return _context.Posts.OrderByDescending(p => p.Timestamp).ToList();
+            return _context.Posts
+                .Where(p => userIds.Contains(p.UserId))
+                .OrderByDescending(p => p.Timestamp)
+                .ToList();
         }
 
         public List<Post> GetUsersPosts(int targetUserId)
         {
-            return _context.Posts.Where(p => p.UserId == targetUserId).ToList();
+            return _context.Posts
+                .Where(p => p.UserId == targetUserId)
+                .OrderByDescending(p => p.Timestamp)
+                .ToList();
         }
 
         public void AddPost(Post post)

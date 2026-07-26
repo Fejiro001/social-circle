@@ -6,14 +6,22 @@ namespace SocialCircle.BLL
     public class PostService
     {
         private readonly PostRepo _postRepo;
-        public PostService(PostRepo postRepo)
+        private readonly UserFollowRepo _followRepo;
+        public PostService(PostRepo postRepo, UserFollowRepo followRepo)
         {
             _postRepo = postRepo;
+            _followRepo = followRepo;
         }
 
         public List<Post> GetFeedPosts(int currentUserId)
         {
-            return _postRepo.GetFeedPosts(currentUserId);
+            List<UserFollow> folowingList = _followRepo.GetFollowing(currentUserId);
+            List<int> userIds = folowingList.Select(f => f.FollowingId).ToList();
+
+            // Current user should see their posts too
+            userIds.Add(currentUserId);
+
+            return _postRepo.GetFeedPosts(userIds);
         }
 
         public List<Post> GetUsersPosts(int targetUserId)

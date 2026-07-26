@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using SocialCircle.Models;
 using SocialCircle.BLL;
 using SocialCircle.DAL;
+using SocialCircle.Models;
 
 namespace SocialCircle
 {

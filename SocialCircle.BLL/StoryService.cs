@@ -34,6 +34,21 @@ namespace SocialCircle.BLL
                 .ToList();
         }
 
+        public Story? LogStoryView(int storyId, int currentUserId)
+        {
+            var activeStories = GetActiveStories();
+            var targetStory = activeStories.FirstOrDefault(s => s.StoryId == storyId);
+            if (targetStory == null) return null;
 
+            var viewRecord = new StoryView
+            {
+                StoryId = storyId,
+                UserId = currentUserId,
+                ViewDateTime = DateTime.Now
+            };
+            _viewRepo.InsertStoryView(viewRecord);
+
+            return targetStory;
+        }
     }
 }

@@ -14,6 +14,32 @@ namespace SocialCircle.Controllers
             _dmService = dmService;
         }
 
+        // Displays active conversational threads
+        public IActionResult Index()
+        {
+            var activeThreads = _dmService.GetInboxSummaries(CurrentUserMockID);
+
+            var inboxModels = activeThreads.Select(t => {
+                int targetId = (t.SenderId == CurrentUserMockID) ? t.ReceiverId : t.SenderId;
+
+                return new InboxViewModel
+                {
+                    TargetUserId = targetId,
+                    TargetUserName = "User_" + targetId,
+
+                    TargetAvatar = $"{t.SenderId}", //can be adjusted
+
+                    LastMessageText = t.MessageText,
+                    LastMessageTimestamp = t.Timestamp,
+                    IsUnread = !t.IsRead && t.ReceiverId == CurrentUserMockID
+                };
+            }).ToList();
+
+            return View(inboxModels); 
+        }
+
+
+
 
     }
 }

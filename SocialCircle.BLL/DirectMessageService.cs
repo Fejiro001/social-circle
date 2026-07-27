@@ -33,7 +33,14 @@ namespace SocialCircle.BLL
                 .ToList();
         }
 
-
+        public List<DirectMessage> GetInboxSummaries(int currentUserId)
+        {
+            return _dmRepo.FetchAllUserMessages(currentUserId)
+                .GroupBy(m => m.SenderId == currentUserId ? m.ReceiverId : m.SenderId)
+                .Select(g => g.OrderByDescending(m => m.Timestamp).First())
+                .OrderByDescending(m => m.Timestamp)
+                .ToList();
+        }
     }
 
 }

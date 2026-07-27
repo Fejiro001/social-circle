@@ -1,4 +1,5 @@
-﻿using SocialCircle.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialCircle.Models;
 
 namespace SocialCircle.DAL
 {
@@ -13,13 +14,19 @@ namespace SocialCircle.DAL
         // Get everyone who follows a specific user
         public List<UserFollow> GetFollowers(int userId)
         {
-            return _context.UserFollows.Where(f => f.FollowingId == userId).ToList();
+            return _context.UserFollows
+                .Where(f => f.FollowingId == userId)
+                .Include(f => f.Follower)
+                .ToList();
         }
 
         // Get everyone that a specific user is following
         public List<UserFollow> GetFollowing(int userId)
         {
-            return _context.UserFollows.Where(f => f.FollowerId == userId).ToList();
+            return _context.UserFollows
+                .Where(f => f.FollowerId == userId)
+                .Include(f => f.Following)
+                .ToList();
         }
 
         // Checks if a following relationship exists

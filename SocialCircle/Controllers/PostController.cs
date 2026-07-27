@@ -20,9 +20,13 @@ namespace SocialCircle.Controllers
         {
             int currentUserId = CurrentUser.Id;
             List<Post> posts = _postService.GetFeedPosts(currentUserId);
+
+            User currentUser = _userService.GetUserById(currentUserId);
+
             NewsfeedViewModel vm = new NewsfeedViewModel
             {
-                Posts = posts
+                Posts = posts,
+                CurrentUser = currentUser
             };
 
             return View(vm);

@@ -27,11 +27,15 @@ html {
 }
 
 body {
-    margin-bottom: 60px;
     background-color: var(--bg-main);
     color: var(--text-primary);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 body.app-body {

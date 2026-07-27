@@ -25,6 +25,14 @@ namespace SocialCircle.BLL
             _dmRepo.InsertMessage(message);
         }
 
+        public List<DirectMessage> GetChatHistory(int userA, int userB)
+        {
+            // Loads chronologically by time ascending
+            return _dmRepo.FetchConversation(userA, userB)
+                .OrderBy(m => m.Timestamp)
+                .ToList();
+        }
+
 
     }
 

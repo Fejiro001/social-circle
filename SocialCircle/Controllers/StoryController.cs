@@ -25,7 +25,7 @@ namespace SocialCircle.Controllers
                 StoryContent = s.StoryContent,
                 Timestamp = s.Timestamp,
                 AuthorName = "User_" + s.UserId,
-                AuthorAvatar = $"{s.UserId}" //should be adjusted
+                AuthorAvatar = $"{s.UserId}" //ProfilePicURL
             }).ToList();
 
             return View(viewModelList); 
@@ -43,7 +43,7 @@ namespace SocialCircle.Controllers
                 StoryContent = story.StoryContent,
                 Timestamp = story.Timestamp,
                 AuthorName = "User_" + story.UserId,
-                AuthorAvatar = $"{story.UserId}" //should be adjusted
+                AuthorAvatar = $"{story.UserId}" //ProfilePicURL
             };
 
             ViewBag.TotalViews = _storyViewService.GetTotalViewCount(storyId);

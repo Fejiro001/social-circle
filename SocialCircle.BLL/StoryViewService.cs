@@ -39,6 +39,10 @@ namespace SocialCircle.BLL
                 .ToList();
         }
 
-
+        // Counts overall distinct view interactions
+        public int GetTotalViewCount(int storyId)
+        {
+            return _storyViewRepo.FetchStoryViewers(storyId).Count;
+        }
     }
 }

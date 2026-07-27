@@ -38,7 +38,21 @@ namespace SocialCircle.Controllers
             return View(inboxModels); 
         }
 
+        // Loads chronological historical chats
+        public IActionResult ViewChat(int targetUserId)
+        {
+            var messages = _dmService.GetChatHistory(CurrentUserMockID, targetUserId);
 
+            var model = new ChatHistoryViewModel
+            {
+                CurrentUserId = CurrentUserMockID,
+                TargetUserId = targetUserId,
+                TargetUserName = "User_" + targetUserId,
+                Messages = messages
+            };
+
+            return View(model); 
+        }
 
 
     }

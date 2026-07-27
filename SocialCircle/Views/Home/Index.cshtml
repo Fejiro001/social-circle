@@ -2,7 +2,23 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero-section">
+    <div class="logo-wrapper">
+        <img src="~/images/logo-large.svg" alt="Social Circle logo" class="hero-logo" width="150"
+             height="80" />
+    </div>
+
+    <h2 class="hero-title">
+        Your circle.<br />
+        <span class="accent-primary">Your voice.</span>
+    </h2>
+
+    <p class="hero-subtitle">
+        The internet's text-first living room. No noise, just thoughts, conversations, and the people you care about.
+    </p>
+
+    <div class="hero-actions">
+        <a asp-controller="Post" asp-action="Index" class="btn btn-primary">Log In &rarr;</a>
+        <a asp-controller="Post" asp-action="Index" class="btn btn-secondary">Create Account</a>
+    </div>
+</section>

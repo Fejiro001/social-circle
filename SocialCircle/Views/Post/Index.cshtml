@@ -1,0 +1,89 @@
+﻿@model SocialCircle.Models.NewsfeedViewModel
+
+@{
+    Layout = "_AppLayout";
+    ViewData["Title"] = "Home Feed";
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="error-alert" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="create-post-card">
+    <div class="create-post-header">
+        <div class="story-circle">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+        <p class="story-label">Your Story</p>
+        <ul></ul>
+    </div>
+
+    <form asp-controller="Post" asp-action="CreatePost" method="post">
+        <div class="create-post-form-row">
+            <div class="avatar-circle">
+                @if (Model.CurrentUser != null && !string.IsNullOrEmpty(Model.CurrentUser.ProfilePicUrl))
+                {
+                    <img src="@Model.CurrentUser.ProfilePicUrl" alt="@Model.CurrentUser.UserName profile picture" class="img-circle-fit" />
+                }
+                else
+                {
+                    <img src="https://api.dicebear.com/8.x/pixel-art/svg?seed=Unknown" alt="Anonymous profile picture" class="img-circle-fit" />
+                }
+            </div>
+            <div class="create-post-textarea-container">
+                <textarea name="PostText" class="create-post-textarea" rows="3" placeholder="What's on your mind in your circle?" required></textarea>
+            </div>
+        </div>
+        <div class="create-post-footer">
+            <button type="submit" class="btn-primary submit-post-btn">Post</button>
+        </div>
+    </form>
+</div>
+
+<div class="post-container">
+    @if (Model.Posts != null && Model.Posts.Any())
+    {
+        @foreach (var post in Model.Posts)
+        {
+            <div class="post-box post-card">
+                <div class="post-header">
+                    <div class="post-user-info">
+                        <div class="post-avatar-box">
+                            <img src="@post.User.ProfilePicUrl" alt="@post.User.UserName profile picture" class="img-circle-fit" />
+                        </div>
+                        <div>
+                            <h6 class="post-username">@($"@{post.User.UserName}")</h6>
+                            <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-content">
+                    <p class="post-text">@post.PostText</p>
+                </div>
+
+                <div class="post-footer-actions">
+                    <button class="action-btn">
+                        <i class="fa-regular fa-comment"></i> <span>Replies</span>
+                    </button>
+                    <button class="action-btn">
+                        <i class="fa-regular fa-heart"></i> <span>Likes</span>
+                    </button>
+                    <button class="action-btn">
+                        <span>Share</span>
+                    </button>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="empty-feed">
+            <p class="empty-feed-title">No posts in your circle yet.</p>
+            <p class="empty-feed-subtitle">Be the first to share a thought above!</p>
+        </div>
+    }
+</div>

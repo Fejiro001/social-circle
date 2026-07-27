@@ -1,4 +1,5 @@
-﻿using SocialCircle.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialCircle.Models;
 
 namespace SocialCircle.DAL
 {
@@ -13,6 +14,7 @@ namespace SocialCircle.DAL
         public List<Post> GetFeedPosts(List<int> userIds)
         {
             return _context.Posts
+                .Include(p => p.User)
                 .Where(p => userIds.Contains(p.UserId))
                 .OrderByDescending(p => p.Timestamp)
                 .ToList();

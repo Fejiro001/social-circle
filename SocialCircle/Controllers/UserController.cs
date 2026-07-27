@@ -16,6 +16,19 @@ namespace SocialCircle.Controllers
         }
 
         [HttpGet]
+        public IActionResult Index()
+        {
+            int currentUserId = CurrentUser.Id;
+            List<User> suggestedUsers = _userService.GetSuggestedUsers(currentUserId);
+            var vm = new SuggestedUsersViewModel
+            {
+                SuggestedUsers = suggestedUsers
+            };
+
+            return View(vm);
+        }
+
+        [HttpGet]
         public IActionResult ViewProfile(int id)
         {
             int currentUserId = CurrentUser.Id;
@@ -58,20 +71,7 @@ namespace SocialCircle.Controllers
 
                 _followService.FollowUser(newFollow);
             }
-            return RedirectToAction("ViewProfile", new { id = targetUserId });
-        }
-
-        [HttpGet]
-        public IActionResult GetSuggestedUsers()
-        {
-            int currentUserId = CurrentUser.Id;
-            List<User> suggestedUsers = _userService.GetSuggestedUsers(currentUserId);
-            var vm = new SuggestedUsersViewModel
-            {
-                SuggestedUsers = suggestedUsers
-            };
-
-            return PartialView("_SuggestedUsers", vm);
+            return RedirectToAction("Index");
         }
     }
 }

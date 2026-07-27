@@ -1,0 +1,41 @@
+﻿@model SocialCircle.Models.SuggestedUsersViewModel
+
+<div class="suggested-users-card">
+    <h6 class="suggested-users-title">Who to Follow</h6>
+    <p class="suggested-users-subtitle">Suggested connections.</p>
+
+    @if (Model?.SuggestedUsers != null && Model.SuggestedUsers.Any())
+    {
+        <div class="suggested-users-list">
+            @foreach (var user in Model.SuggestedUsers)
+            {
+                <div class="suggested-user-item">
+                    <div class="suggested-user-info">
+                        <div class="suggested-avatar-box">
+                            @if (!string.IsNullOrEmpty(user.ProfilePicUrl))
+                            {
+                                <img src="@user.ProfilePicUrl" alt="@user.UserName profile picture" class="img-circle-fit" />
+                            }
+                            else
+                            {
+                                <span>@user.UserName.Substring(0, 1).ToUpper()</span>
+                            }
+                        </div>
+                        <div class="suggested-user-text">
+                            <a asp-controller="User" asp-action="ViewProfile" asp-route-id="@user.UserId" class="suggested-username">@($"@{user.UserName}")</a>
+                            <span class="suggested-handle text-truncate">@user.Bio</span>
+                        </div>
+                    </div>
+                    <form asp-controller="User" asp-action="ToggleFollow" method="post">
+                        <input type="hidden" name="targetUserId" value="@user.UserId" />
+                        <button type="submit" class="follow-action-btn">Follow</button>
+                    </form>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="no-suggestions-text">No suggestions available right now.</p>
+    }
+</div>

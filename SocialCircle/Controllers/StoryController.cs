@@ -16,6 +16,20 @@ namespace SocialCircle.Controllers
             _storyViewService = storyViewService;
         }
 
-       
+        public IActionResult Index()
+        {
+            var activeStories = _storyService.GetActiveStories();
+            var viewModelList = activeStories.Select(s => new StoryViewModel
+            {
+                StoryId = s.StoryId,
+                StoryContent = s.StoryContent,
+                Timestamp = s.Timestamp,
+                AuthorName = "User_" + s.UserId,
+                AuthorAvatar = $"https://dicebear.com{s.UserId}"
+            }).ToList();
+
+            return View(viewModelList); 
+        }
+
     }
 }

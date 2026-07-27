@@ -50,6 +50,20 @@ namespace SocialCircle.Controllers
 
             return View(model);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken] // Protects local SQL database
+        public IActionResult UploadStory(string storyContent)
+        {
+            if (string.IsNullOrWhiteSpace(storyContent))
+            {
+                ModelState.AddModelError("storyContent", "Story text content cannot be blank.");
+                return RedirectToAction("Index");
+            }
 
+            _storyService.CreateStory(CurrentUserMockID, storyContent);
+
+            TempData["SuccessMessage"] = "Story successfully posted!";
+            return RedirectToAction("Index");
+        }
     }
 }

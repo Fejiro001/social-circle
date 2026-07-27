@@ -14,6 +14,17 @@ namespace SocialCircle.BLL
             _viewRepo = viewRepo;
         }
 
+        public void CreateStory(int userId, string content)
+        {
+            var story = new Story
+            {
+                UserId = userId,
+                StoryContent = content,
+                Timestamp = DateTime.Now
+            };
+            _storyRepo.AddStory(story);
+        }
 
+     
     }
 }

@@ -25,6 +25,15 @@ namespace SocialCircle.BLL
             _storyRepo.AddStory(story);
         }
 
-     
+        public List<Story> GetActiveStories()
+        {
+            // Hide rows older than 24 hours using a computed database expiration check
+            return _storyRepo.FetchActiveStories()
+                .Where(s => s.ExpirationTime.HasValue && s.ExpirationTime.Value > DateTime.Now)
+                .OrderByDescending(s => s.Timestamp)
+                .ToList();
+        }
+
+
     }
 }

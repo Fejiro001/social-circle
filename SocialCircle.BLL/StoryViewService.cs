@@ -31,6 +31,14 @@ namespace SocialCircle.BLL
             }
         }
 
-  
+        // Fetches total view list for a story 
+        public List<StoryView> GetStoryViewersList(int storyId)
+        {
+            return _storyViewRepo.FetchStoryViewers(storyId)
+                .OrderByDescending(v => v.ViewDateTime)
+                .ToList();
+        }
+
+
     }
 }

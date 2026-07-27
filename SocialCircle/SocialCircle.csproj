@@ -22,4 +22,8 @@
     <ProjectReference Include="..\SocialCircle.Models\SocialCircle.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\User\" />
+  </ItemGroup>
+
 </Project>

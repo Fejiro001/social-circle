@@ -54,6 +54,16 @@ namespace SocialCircle.Controllers
             return View(model); 
         }
 
+        [HttpPost]
+        public IActionResult SendMessage(SendMessageViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("ViewChat", new { targetUserId = model.ReceiverId });
+            }
 
+            _dmService.SendChatMessage(CurrentUserMockID, model.ReceiverId, model.MessageText);
+            return RedirectToAction("ViewChat", new { targetUserId = model.ReceiverId });
+        }
     }
 }

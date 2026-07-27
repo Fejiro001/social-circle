@@ -25,10 +25,30 @@ namespace SocialCircle.Controllers
                 StoryContent = s.StoryContent,
                 Timestamp = s.Timestamp,
                 AuthorName = "User_" + s.UserId,
-                AuthorAvatar = $"https://dicebear.com{s.UserId}"
+                AuthorAvatar = $"{s.UserId}" //can be adjusted
             }).ToList();
 
             return View(viewModelList); 
+        }
+        public IActionResult ViewStory(int storyId)
+        {
+            var story = _storyService.LogStoryView(storyId, CurrentUserMockID);
+            if (story == null) return NotFound("The story time has expired.");
+
+            _storyViewService.RecordStoryView(storyId, CurrentUserMockID);
+
+            var model = new StoryViewModel
+            {
+                StoryId = story.StoryId,
+                StoryContent = story.StoryContent,
+                Timestamp = story.Timestamp,
+                AuthorName = "User_" + story.UserId,
+                AuthorAvatar = $"{story.UserId}" //can be adjusted
+            };
+
+            ViewBag.TotalViews = _storyViewService.GetTotalViewCount(storyId);
+
+            return View(model);
         }
 
     }

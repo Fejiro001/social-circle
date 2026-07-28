@@ -53,8 +53,12 @@
                 }
 
                 <div class="profile-stats-row">
-                    <span><strong>@Model.FollowingCount</strong> Following</span>
-                    <span><strong>@Model.FollowersCount</strong> Followers</span>
+                    <a asp-controller="User" asp-action="Following" asp-route-id="@Model.User.UserId" class="profile-stat-link">
+                        <span>@Model.FollowingCount</span> Following
+                    </a>
+                    <a asp-controller="User" asp-action="Followers" asp-route-id="@Model.User.UserId" class="profile-stat-link">
+                        <span>@Model.FollowersCount</span> Followers
+                    </a>
                 </div>
             </div>
         </div>
@@ -92,7 +96,7 @@
                         </div>
 
                         <div class="post-footer-metrics">
-                            <span><i class="fa-regular fa-heart text-danger"></i> @post.LikesCount</span>
+                            <span><i class="fa-regular fa-heart"></i> @post.LikesCount</span>
                             <span><i class="fa-regular fa-comment text-secondary"></i> @post.CommentsCount</span>
                         </div>
                     </div>

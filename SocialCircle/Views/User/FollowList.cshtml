@@ -62,7 +62,6 @@
                         <div class="follow-action-wrapper">
                             <form asp-controller="User" asp-action="ToggleFollow" method="post">
                                 <input type="hidden" name="targetUserId" value="@user.UserId" />
-                                <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
 
                                 <button type="submit" class="follow-action-btn @(user.IsFollowing ? "following" : "")">
                                     @(user.IsFollowing ? "Following" : "Follow")

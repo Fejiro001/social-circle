@@ -79,6 +79,7 @@
     height: 100vh;
     flex: 0 0 25%;
     max-width: 25%;
+    background-color: #fff;
 }
 
 @media (min-width: 992px) {

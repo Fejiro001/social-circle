@@ -1,0 +1,20 @@
+﻿@model SocialCircle.Models.SidebarAccountViewModel
+
+<div class="sidebar-footer-account">
+    <a asp-controller="Profile" asp-action="Index" class="sidebar-account-link">
+        <div class="sidebar-account-avatar">
+            @if (!string.IsNullOrEmpty(Model.ProfilePicUrl))
+            {
+                <img src="@Model.ProfilePicUrl" alt="@Model.DisplayName profile picture" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;" />
+            }
+            else
+            {
+                <span>@Model.Initial</span>
+            }
+        </div>
+        <div class="sidebar-account-text-group">
+            <span class="sidebar-account-name">@Model.DisplayName</span>
+            <span class="sidebar-account-handle">@Model.Handle</span>
+        </div>
+    </a>
+</div>

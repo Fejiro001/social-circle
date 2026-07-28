@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
+    padding: 1rem;
     background-color: #fff;
     border-bottom: 1px solid #dee2e6;
     position: sticky;
@@ -50,10 +50,9 @@
 
 .dashboard-container {
     width: 100%;
-    padding-right: var(--bs-gutter-x, 0.75rem);
-    padding-left: var(--bs-gutter-x, 0.75rem);
-    margin-right: auto;
-    margin-left: auto;
+    max-width: 100%;
+    padding-inline: 0;
+    margin-inline: auto;
     padding-bottom: 5rem;
 }
 
@@ -65,21 +64,24 @@
 
 .dashboard-row {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    margin: 0;
 }
 
 .desktop-sidebar {
     display: none;
     flex-direction: column;
-    border-right: 1px solid #dee2e6;
-    padding: 1.5rem 0.75rem;
+    border-right: 1px solid #e5e7eb;
+    padding: 1.5rem 1rem;
     position: sticky;
     top: 0;
     height: 100vh;
-    flex: 0 0 25%;
-    max-width: 25%;
+    overflow-y: auto;
+    flex: 0 0 240px; /* Fixed clean width instead of percentage */
+    max-width: 240px;
     background-color: #fff;
+    align-self: flex-start;
 }
 
 @media (min-width: 992px) {
@@ -89,94 +91,89 @@
 }
 
 .sidebar-brand-container {
-    margin-bottom: 1.5rem;
-    padding: 0 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.sidebar-logo-img {
-    height: 28px;
-}
-
-.sidebar-brand-link {
-    text-decoration: none;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #212529;
-}
-
-.sidebar-nav-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    flex-grow: 1;
-}
-
-.sidebar-nav-item {
-    color: #212529;
-    font-weight: 600;
-    padding: 0.5rem 0.75rem;
-    border-radius: 50rem;
-    text-decoration: none;
+    margin-bottom: 2rem;
+    padding: 0 0.75rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
 }
 
-.sidebar-nav-item:hover {
-    background-color: #f8f9fa;
+.sidebar-logo-img {
+    height: 36px;
+    width: 36px;
+    border-radius: 10px;
+}
+
+.sidebar-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex-grow: 1;
 }
 
 .sidebar-footer-account {
     margin-top: auto;
-    padding-top: 0.75rem;
-    border-top: 1px solid #dee2e6;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-}
-
-.sidebar-account-link {
-    text-decoration: none;
-    color: #212529;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
 }
 
 .sidebar-account-avatar {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background-color: #6c757d;
+    background-color: #4f46e5;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
 .sidebar-account-text-group {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .sidebar-account-name {
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .sidebar-account-handle {
-    color: #6c757d;
-    font-size: 0.75rem;
+    color: #6b7280;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Center Feed & Widgets Wrapper --- */
+.feed-aside-wrapper {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    max-width: 1440px;
+}
+
+@media (min-width: 992px) {
+    .feed-aside-wrapper {
+        flex: 0 0 80%;
+        max-width: 80%;
+    }
 }
 
 .main-content-feed {
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding: 1.5rem 0.75rem;
+    flex: 0 0 65%;
+    max-width: 65%;
+    padding: 1.5rem 1rem;
     min-height: 100vh;
 }
 
@@ -199,7 +196,7 @@
     display: none;
     flex: 0 0 25%;
     max-width: 25%;
-    padding: 1.5rem 0.75rem;
+    padding: 1.5rem 1rem;
     position: sticky;
     top: 0;
     height: 100vh;

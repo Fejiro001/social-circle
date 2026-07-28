@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SocialCircle.styles.css" asp-append-version="true" />
 </head>
-<body class="">
+<body>
     <header class="mobile-header">
         <div class="header-logo-group">
             <img src="~/images/logo-small.svg" alt="Social Circle logo" class="header-logo-img" />
@@ -46,25 +46,19 @@
                 </div>
 
                 <div class="sidebar-footer-account">
-                    <a asp-controller="Profile" asp-action="Index" class="sidebar-account-link">
-                        <div class="sidebar-account-avatar">
-                            O
-                        </div>
-                        <div class="sidebar-account-text-group">
-                            <span class="sidebar-account-name">My Account</span>
-                            <span class="sidebar-account-handle">@("@user")</span>
-                        </div>
-                    </a>
+                    @await Component.InvokeAsync("SidebarAccount")
                 </div>
             </nav>
 
-            <main class="main-content-feed" role="main">
-                @RenderBody()
-            </main>
+            <div class="feed-aside-wrapper">
+                <main class="main-content-feed" role="main">
+                    @RenderBody()
+                </main>
 
-            <aside class="desktop-aside-widgets">
-                @await Component.InvokeAsync("SuggestedUsers")
-            </aside>
+                <aside class="desktop-aside-widgets">
+                    @await Component.InvokeAsync("SuggestedUsers")
+                </aside>
+            </div>
         </div>
     </div>
 

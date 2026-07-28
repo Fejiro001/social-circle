@@ -29,4 +29,8 @@
     <ProjectReference Include="..\SocialCircle.Models\SocialCircle.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\DirectMessage\" />
+  </ItemGroup>
+
 </Project>

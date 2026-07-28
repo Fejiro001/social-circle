@@ -17,6 +17,7 @@
 
         @foreach (var thread in Model)
         {
+            <!-- click target that links straight to the targeted chat log -->
             <a asp-action="ViewChat" asp-route-targetUserId="@thread.TargetUserId" class="dm-thread-row">
                 <div class="dm-avatar-column">
                     <div class="dm-avatar-box">

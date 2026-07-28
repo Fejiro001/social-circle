@@ -10,6 +10,13 @@
         <h4>Chatting with: @Model.TargetUserName</h4>
     </div>
 
+    <!-- Chronological message stream -->
+    <div class="sc-chat-stream" id="chatStream">
+        @if (!Model.Messages.Any())
+        {
+            <p class="sc-empty-text text-center mt-4">No past messages. Say hello to start the conversation!</p>
+        }
+
 
 </div>
 

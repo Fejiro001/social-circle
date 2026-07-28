@@ -365,7 +365,7 @@ textarea.input-validation-error:focus {
     justify-content: center;
     overflow: hidden;
     font-weight: 600;
-    color: #495057;
+    color: var(--text-muted);
 }
 
 .img-circle-fit {
@@ -449,7 +449,7 @@ textarea.input-validation-error:focus {
     margin-bottom: 1rem;
 }
 
-/* Slim custom scrollbar for Webkit browsers (Chrome, Edge, Safari) */
+/* Made scrollbar slimmer */
 .story-feed-container::-webkit-scrollbar {
     height: 6px;
 }
@@ -476,7 +476,7 @@ textarea.input-validation-error:focus {
     justify-content: space-between;
 }
 
-/* --- Add Story Button --- */
+/* Add Story Button */
 .add-story .add-btn {
     width: 64px;
     height: 64px;
@@ -529,7 +529,7 @@ textarea.input-validation-error:focus {
     color: #666;
 }
 
-/* --- Custom Story Modal Card Overrides --- */
+/* Custom Story Modal Card Overrides */
 .custom-modal-card {
     background: #fff;
     border-radius: 16px;

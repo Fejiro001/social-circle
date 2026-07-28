@@ -24,7 +24,7 @@
                 }
                 else
                 {
-                    <img src="https://api.dicebear.com/8.x/pixel-art/svg?seed=Unknown" alt="Anonymous profile picture" class="img-circle-fit" />
+                    <span>@Model.CurrentUser.UserName.Substring(0, 1).ToUpper()</span>
                 }
             </div>
             <div class="create-post-textarea-container">
@@ -46,7 +46,14 @@
                 <div class="post-header">
                     <div class="post-user-info">
                         <div class="post-avatar-box">
-                            <img src="@post.ProfilePicUrl" alt="@post.UserName profile picture" class="img-circle-fit" />
+                            @if (!string.IsNullOrEmpty(post.ProfilePicUrl))
+                            {
+                                <img src="@post.ProfilePicUrl" alt="@post.UserName profile picture" class="img-circle-fit" />
+                            }
+                            else
+                            {
+                                <span>@post.UserName.Substring(0, 1).ToUpper()</span>
+                            }
                         </div>
                         <div>
                             <h6 class="post-username">@($"@{post.UserName}")</h6>

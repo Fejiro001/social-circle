@@ -10,7 +10,7 @@
         <h4>Chatting with: @Model.TargetUserName</h4>
     </div>
 
-    <!-- Chronological message stream -->
+    <!-- Chronological message ordering -->
     <div class="sc-chat-stream" id="chatStream">
         @if (!Model.Messages.Any())
         {
@@ -40,3 +40,13 @@
         </form>
     </div>
 </div>
+
+<!-- will automatically scroll to the newest text at the bottom -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var chatStream = document.getElementById("chatStream");
+        if (chatStream) {
+            chatStream.scrollTop = chatStream.scrollHeight;
+        }
+    });
+</script>

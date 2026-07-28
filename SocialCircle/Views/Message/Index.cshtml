@@ -1,39 +1,42 @@
 ﻿@model IEnumerable<SocialCircle.Models.InboxViewModel>
 
 @{
-    ViewData["Title"] = "Direct Messages Inbox";
+    ViewData["Title"] = "Messages Inbox";
 }
 
-<div class="sc-inbox-container">
-    <div class="sc-inbox-header">
-        <h2>Your Messages</h2>
+<div class="dm-inbox-container">
+    <div class="dm-inbox-header">
+        <h2 class="dm-inbox-title">Your Messages</h2>
     </div>
 
-    <div class="sc-thread-list">
+    <div class="dm-thread-list">
         @if (!Model.Any())
         {
-            <p class="sc-empty-text">No active conversations found. Start a chat to begin!</p>
+            <p class="dm-empty-text">No active conversations found. Start a chat to begin!</p>
         }
 
         @foreach (var thread in Model)
         {
-            <!-- click target linking straight to the targeted chat log -->
-            <a asp-action="ViewChat" asp-route-targetUserId="@thread.TargetUserId" class="sc-thread-row">
-                <div class="sc-thread-avatar-col">
-                    <img src="@thread.TargetAvatar" class="sc-inbox-avatar" alt="Avatar" />
+            <a asp-action="ViewChat" asp-route-targetUserId="@thread.TargetUserId" class="dm-thread-row">
+                <div class="dm-avatar-column">
+                    <div class="dm-avatar-box">
+                        <img src="@thread.TargetAvatar" class="dm-avatar-fit" alt="Profile Picture" />
+                    </div>
                 </div>
 
-                <div class="sc-thread-details-col">
-                    <div class="sc-thread-meta-row">
-                        <span class="sc-thread-username">@thread.TargetUserName</span>
-                        <span class="sc-thread-time">@thread.LastMessageTimestamp.ToString("MMM dd, HH:mm")</span>
+                <div class="dm-details-column">
+                    <div class="dm-meta-row">
+                        <span class="dm-username">@thread.TargetUserName</span>
+                        <span class="dm-timestamp">@thread.LastMessageTimestamp.ToString("MMM dd, HH:mm")</span>
                     </div>
 
-                    <div class="sc-thread-preview-row">
-                        <p class="sc-message-preview">@thread.LastMessageText</p>
+                    <div class="dm-preview-row">
+                        <p class="dm-message-preview @(thread.IsUnread ? "dm-message-unread" : "")">
+                            @thread.LastMessageText
+                        </p>
                         @if (thread.IsUnread)
                         {
-                            <span class="sc-badge-unread">New</span>
+                            <span class="dm-badge-unread">New</span>
                         }
                     </div>
                 </div>

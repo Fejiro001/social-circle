@@ -2,6 +2,7 @@
 using SocialCircle.BLL;
 using SocialCircle.Helpers;
 using SocialCircle.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SocialCircle.Controllers
 {
@@ -10,6 +11,7 @@ namespace SocialCircle.Controllers
         private readonly UserService _userService;
         private readonly UserFollowService _followService;
         private readonly PostService _postService;
+
         public UserController(UserService service, UserFollowService followService, PostService postService)
         {
             _userService = service;
@@ -18,10 +20,12 @@ namespace SocialCircle.Controllers
         }
 
         [HttpGet]
-        public IActionResult ViewProfile(int id)
+        public IActionResult ViewProfile(int? id)
         {
             int currentUserId = CurrentUser.Id;
-            var profile = _userService.GetProfileData(id, currentUserId);
+            int targetId = id ?? currentUserId;
+
+            var profile = _userService.GetProfileData(targetId, currentUserId);
 
             if (profile == null)
             {
@@ -54,7 +58,7 @@ namespace SocialCircle.Controllers
         }
 
         [HttpPost]
-        public IActionResult ToggleFollow(int targetUserId)
+        public IActionResult ToggleFollow(int targetUserId, string returnUrl = null)
         {
             int currentUserId = CurrentUser.Id;
             bool isFollowing = _followService.IsFollowing(currentUserId, targetUserId);
@@ -73,7 +77,84 @@ namespace SocialCircle.Controllers
 
                 _followService.FollowUser(newFollow);
             }
+
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return RedirectToAction(returnUrl);
+            }
             return RedirectToAction("Index", "Post");
+        }
+
+        [HttpGet]
+        public IActionResult Following(int id)
+        {
+            int currentUserId = CurrentUser.Id;
+            var targetUser = _userService.GetUserById(id);
+
+            if (targetUser == null)
+            {
+                return NotFound();
+            }
+
+            var followingRels = _followService.GetFollowing(id);
+
+            var userCards = followingRels.Select(f =>
+            {
+                var u = f.Following;
+                return new FollowUserCardViewModel
+                {
+                    UserId = u.UserId,
+                    UserName = u.UserName,
+                    Bio = u.Bio,
+                    ProfilePicUrl = u.ProfilePicUrl,
+                    IsFollowing = _followService.IsFollowing(currentUserId, u.UserId),
+                    IsSelf = u.UserId == currentUserId
+                };
+            }).ToList();
+
+            var vm = new FollowListViewModel
+            {
+                User = targetUser,
+                ListType = ListType.Following,
+                Users = userCards
+            };
+            return View("FollowList", vm);
+        }
+
+        [HttpGet]
+        public IActionResult Followers(int id)
+        {
+            int currentUserId = CurrentUser.Id;
+            var targetUser = _userService.GetUserById(id);
+
+            if (targetUser == null)
+            {
+                return NotFound();
+            }
+
+            var followerRels = _followService.GetFollowers(id);
+
+            var userCards = followerRels.Select(f =>
+            {
+                var u = f.Follower;
+                return new FollowUserCardViewModel
+                {
+                    UserId = u.UserId,
+                    UserName = u.UserName,
+                    Bio = u.Bio,
+                    ProfilePicUrl = u.ProfilePicUrl,
+                    IsFollowing = _followService.IsFollowing(currentUserId, u.UserId),
+                    IsSelf = u.UserId == currentUserId
+                };
+            }).ToList();
+
+            var vm = new FollowListViewModel
+            {
+                User = targetUser,
+                ListType = ListType.Followers,
+                Users = userCards
+            };
+            return View("FollowList", vm);
         }
     }
 }

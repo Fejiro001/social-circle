@@ -1,0 +1,83 @@
+﻿@model SocialCircle.Models.FollowListViewModel
+
+@{
+    Layout = "_AppLayout";
+    ViewData["Title"] = $"{Model.User.UserName}'s {Model.ListType}";
+}
+
+<div class="follow-list-container">
+    <!-- Back to Profile Link -->
+    <a asp-controller="User" asp-action="ViewProfile" asp-route-id="@Model.User.UserId" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i> Back to profile
+    </a>
+
+    <!-- Tabs Navigation Header -->
+    <div class="follow-tabs">
+        <a asp-controller="User" asp-action="Following" asp-route-id="@Model.User.UserId"
+           class="follow-tab-btn @(Model.ListType == SocialCircle.Models.ListType.Following ? "active" : "")">
+            Following
+        </a>
+        <a asp-controller="User" asp-action="Followers" asp-route-id="@Model.User.UserId"
+           class="follow-tab-btn @(Model.ListType == SocialCircle.Models.ListType.Followers ? "active" : "")">
+            Followers
+        </a>
+    </div>
+
+    <!-- Section Heading -->
+    <h2 class="follow-section-title">
+        @Model.ListType &bull; @Model.Users.Count
+    </h2>
+
+    <!-- User Cards List -->
+    @if (Model.Users != null && Model.Users.Any())
+    {
+        <div class="follow-cards-list">
+            @foreach (var user in Model.Users)
+            {
+                <div class="follow-user-card">
+                    <!-- User Info Link (Clicking avatar/name goes to their profile) -->
+                    <a asp-controller="User" asp-action="ViewProfile" asp-route-id="@user.UserId" class="follow-user-info">
+                        <div class="follow-avatar-box">
+                            @if (!string.IsNullOrEmpty(user.ProfilePicUrl))
+                            {
+                                <img src="@user.ProfilePicUrl" alt="@user.UserName" class="img-circle-fit" />
+                            }
+                            else
+                            {
+                                <span>@user.UserName.Substring(0, 1).ToUpper()</span>
+                            }
+                        </div>
+                        <div class="follow-user-meta">
+                            <span class="follow-username">@@@user.UserName</span>
+                            @if (!string.IsNullOrEmpty(user.Bio))
+                            {
+                                <span class="follow-user-bio">@user.Bio</span>
+                            }
+                        </div>
+                    </a>
+
+                    <!-- Follow / Unfollow Action Button (Only show if it's not the current user themselves) -->
+                    @if (!user.IsSelf)
+                    {
+                        <div class="follow-action-wrapper">
+                            <form asp-controller="User" asp-action="ToggleFollow" method="post">
+                                <input type="hidden" name="targetUserId" value="@user.UserId" />
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+
+                                <button type="submit" class="follow-action-btn @(user.IsFollowing ? "following" : "")">
+                                    @(user.IsFollowing ? "Following" : "Follow")
+                                </button>
+                            </form>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-follow-card">
+            <p class="text-muted mb-0">No @Model.ListType.ToString().ToLower() yet.</p>
+        </div>
+    }
+</div>

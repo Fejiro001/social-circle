@@ -10,7 +10,7 @@
             @foreach (var user in Model.SuggestedUsers)
             {
                 <div class="suggested-user-item">
-                    <div class="suggested-user-info">
+                    <a asp-controller="User" asp-action="ViewProfile" asp-route-id="@user.UserId" class="suggested-user-info">
                         <div class="suggested-avatar-box">
                             @if (!string.IsNullOrEmpty(user.ProfilePicUrl))
                             {
@@ -22,10 +22,10 @@
                             }
                         </div>
                         <div class="suggested-user-text">
-                            <a asp-controller="User" asp-action="ViewProfile" asp-route-id="@user.UserId" class="suggested-username">@($"@{user.UserName}")</a>
+                            <span asp-controller="User" asp-action="ViewProfile" asp-route-id="@user.UserId" class="suggested-username">@($"@{user.UserName}")</span>
                             <span class="suggested-handle text-truncate">@user.Bio</span>
                         </div>
-                    </div>
+                    </a>
                     <form asp-controller="User" asp-action="ToggleFollow" method="post">
                         <input type="hidden" name="targetUserId" value="@user.UserId" />
                         <button type="submit" class="follow-action-btn @(user.IsFollowing ? "following" : "")">@(user.IsFollowing ? "Following" : "Follow")</button>

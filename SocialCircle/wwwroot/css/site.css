@@ -19,6 +19,7 @@ html {
     font-size: 14px;
     position: relative;
     min-height: 100%;
+    scrollbar-gutter: stable;
 }
 
 @media (min-width: 768px) {
@@ -192,6 +193,30 @@ textarea.input-validation-error:focus {
 }
 
 /* =========================================
+   Mobile header
+   ========================================= */
+.header-profile-link {
+    background-color: var(--accent-primary);
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    border: 1px solid var(--accent-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    p {
+        margin: 0;
+    }
+}
+
+.header-profile-link:hover{
+    color: var(--accent-primary);
+    background-color: #fff;
+}
+
+/* =========================================
    Left sidebar
    ========================================= */
 .sidebar-brand-container {
@@ -319,7 +344,7 @@ textarea.input-validation-error:focus {
 }
 
 .suggested-users-title {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #212529;
     margin-bottom: 2px;
@@ -335,7 +360,7 @@ textarea.input-validation-error:focus {
 .suggested-users-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 20px;
 }
 
 .suggested-user-item {
@@ -391,8 +416,11 @@ textarea.input-validation-error:focus {
     text-overflow: ellipsis;
 }
 
-.suggested-username:hover {
-    text-decoration: underline;
+.suggested-user-info {
+    .suggested-username:hover {
+        color: var(--accent-primary);
+        text-decoration: underline;
+    }
 }
 
 .suggested-handle {
@@ -809,4 +837,54 @@ textarea.input-validation-error:focus {
     flex-shrink: 0;
     padding: 0 1.5rem !important; /* Forces correct layout flow over global max-width rule */
     width: auto !important;
+}
+
+
+/* =========================================
+   User Profile Follow Links
+   ========================================= */
+.profile-stat-link {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.profile-stat-link span {
+    color: #111827;
+    font-weight: 700;
+}
+
+.profile-stat-link:hover {
+    color: var(--accent-primary-hover);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+
+    span {
+        color: var(--accent-primary-hover);
+    }
+}
+
+/* =========================================
+   Newsfeed
+   ========================================= */
+.post-user-info {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.post-username {
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: .875rem;
+    color: #212529;
+}
+
+.post-user-info:hover {
+    .post-username {
+        text-decoration: underline;
+        color: var(--accent-primary);
+    }
 }

@@ -12,15 +12,9 @@
     </div>
 }
 
-<div class="create-post-card">
-    <div class="create-post-header">
-        <div class="story-circle">
-            <i class="fa-solid fa-plus"></i>
-        </div>
-        <p class="story-label">Your Story</p>
-        <ul></ul>
-    </div>
+@await Component.InvokeAsync("StoryFeed")
 
+<div class="create-post-card">
     <form asp-controller="Post" asp-action="CreatePost" method="post">
         <div class="create-post-form-row">
             <div class="avatar-circle">
@@ -30,7 +24,7 @@
                 }
                 else
                 {
-                    <img src="https://api.dicebear.com/8.x/pixel-art/svg?seed=Unknown" alt="Anonymous profile picture" class="img-circle-fit" />
+                    <span>@Model.CurrentUser.UserName.Substring(0, 1).ToUpper()</span>
                 }
             </div>
             <div class="create-post-textarea-container">
@@ -52,10 +46,17 @@
                 <div class="post-header">
                     <div class="post-user-info">
                         <div class="post-avatar-box">
-                            <img src="@post.User.ProfilePicUrl" alt="@post.User.UserName profile picture" class="img-circle-fit" />
+                            @if (!string.IsNullOrEmpty(post.ProfilePicUrl))
+                            {
+                                <img src="@post.ProfilePicUrl" alt="@post.UserName profile picture" class="img-circle-fit" />
+                            }
+                            else
+                            {
+                                <span>@post.UserName.Substring(0, 1).ToUpper()</span>
+                            }
                         </div>
                         <div>
-                            <h6 class="post-username">@($"@{post.User.UserName}")</h6>
+                            <h6 class="post-username">@($"@{post.UserName}")</h6>
                             <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy")</span>
                         </div>
                     </div>

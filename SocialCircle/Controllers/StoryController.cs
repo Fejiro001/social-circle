@@ -16,21 +16,6 @@ namespace SocialCircle.Controllers
             _storyViewService = storyViewService;
         }
 
-        public IActionResult Index()
-        {
-            var activeStories = _storyService.GetActiveStories();
-
-            var viewModelList = activeStories.Select(s => new StoryViewModel
-            {
-                StoryId = s.StoryId,
-                StoryContent = s.StoryContent,
-                Timestamp = s.Timestamp,
-                AuthorName = s.User.UserName,
-                AuthorAvatar = s.User?.ProfilePicUrl
-            }).ToList();
-
-            return View(viewModelList); 
-        }
         public IActionResult ViewStory(int storyId)
         {
             int currentUserId = CurrentUser.Id;
@@ -65,7 +50,7 @@ namespace SocialCircle.Controllers
             _storyService.CreateStory(currentUserId, storyContent);
 
             TempData["SuccessMessage"] = "Story successfully posted!";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Post");
         }
     }
 }

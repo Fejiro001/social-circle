@@ -45,8 +45,9 @@ namespace SocialCircle.BLL
             List<int> followingIds = followingList.Select(f => f.FollowingId).ToList();
 
             return allUsers
-                    .Where(u => u.UserId != currentUserId && !followingIds.Contains(u.UserId))
-                    .Take(5)
+                    .Where(u => u.UserId != currentUserId)
+                    .OrderBy(u => followingIds.Contains(u.UserId)) // Puts non-followed users (false) first, followed users (true) underneath
+                    .Take(10)
                     .ToList();
         }
     }

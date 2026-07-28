@@ -2,6 +2,6 @@
 {
     public class SuggestedUsersViewModel
     {
-        public List<User> SuggestedUsers { get; set; }
+        public List<SuggestedUserItemViewModel>? SuggestedUsers { get; set; }
     }
 }

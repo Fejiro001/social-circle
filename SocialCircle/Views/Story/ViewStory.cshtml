@@ -1,0 +1,27 @@
+﻿@model SocialCircle.Models.StoryViewModel
+
+<div class="story-modal-overlay">
+    <div class="story-modal-card view-story-card">
+
+        <!-- Header: Avatar, Username, Timestamp, and Close Button -->
+        <div class="story-header">
+            <img src="@Model.AuthorAvatar" alt="@Model.AuthorName" class="modal-avatar" />
+            <div class="story-meta">
+                <h4 class="author-name">@($"@{Model.AuthorName}")</h4>
+                <span class="story-time">@Model.Timestamp.ToString("g")</span>
+            </div>
+            <a asp-controller="Post" asp-action="Index" class="close-btn">&times;</a>
+        </div>
+
+        <!-- Body: The Story Text Content -->
+        <div class="story-body">
+            <h2>@Model.StoryContent</h2>
+        </div>
+
+        <!-- Footer: Total Views Count -->
+        <div class="story-footer">
+            <span class="view-count-label">VIEWED BY @ViewBag.TotalViews</span>
+        </div>
+
+    </div>
+</div>

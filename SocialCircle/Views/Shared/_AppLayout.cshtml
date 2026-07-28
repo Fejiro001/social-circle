@@ -35,10 +35,6 @@
                         <i class="fa-regular fa-house"></i>
                         Home
                     </a>
-                    <a asp-controller="User" asp-action="Index" class="sidebar-nav-item">
-                        <i class="fa-solid fa-users"></i>
-                        Suggestions
-                    </a>
                     <a asp-controller="Message" asp-action="Index" class="sidebar-nav-item">
                         <i class="fa-regular fa-comment"></i>
                         Messages
@@ -50,21 +46,19 @@
                 </div>
 
                 <div class="sidebar-footer-account">
-                    <a asp-controller="Profile" asp-action="Index" class="sidebar-account-link">
-                        <div class="sidebar-account-avatar">
-                            O
-                        </div>
-                        <div class="sidebar-account-text-group">
-                            <span class="sidebar-account-name">My Account</span>
-                            <span class="sidebar-account-handle">@("@user")</span>
-                        </div>
-                    </a>
+                    @await Component.InvokeAsync("SidebarAccount")
                 </div>
             </nav>
 
-            <main class="main-content-feed" role="main">
-                @RenderBody()
-            </main>
+            <div class="feed-aside-wrapper">
+                <main class="main-content-feed" role="main">
+                    @RenderBody()
+                </main>
+
+                <aside class="desktop-aside-widgets">
+                    @await Component.InvokeAsync("SuggestedUsers")
+                </aside>
+            </div>
         </div>
     </div>
 
@@ -73,12 +67,6 @@
             <div class="mobile-nav-content">
                 <i class="fa-regular fa-house"></i>
                 Home
-            </div>
-        </a>
-        <a asp-controller="User" asp-action="Index" class="mobile-nav-link">
-            <div class="mobile-nav-content">
-                <i class="fa-solid fa-users"></i>
-                Suggestions
             </div>
         </a>
         <a asp-controller="Message" asp-action="Index" class="mobile-nav-link">

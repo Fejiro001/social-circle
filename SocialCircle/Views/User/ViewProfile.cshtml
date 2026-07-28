@@ -1,0 +1,107 @@
+﻿@model SocialCircle.Models.UserProfileViewModel
+
+@{
+    Layout = "_AppLayout";
+    ViewData["Title"] = $"{Model.User.UserName}'s Profile";
+}
+
+<div class="profile-page-container">
+    <div class="profile-header-card">
+        <div class="profile-banner"></div>
+
+        <div class="profile-info-section">
+            <div class="profile-avatar-row">
+                <div class="profile-avatar-wrapper">
+                    @if (!string.IsNullOrEmpty(Model.User.ProfilePicUrl))
+                    {
+                        <img src="@Model.User.ProfilePicUrl" alt="@Model.User.UserName profile picture" class="profile-avatar-img" />
+                    }
+                    else
+                    {
+                        <span class="profile-avatar-initial">@Model.User.UserName.Substring(0, 1).ToUpper()</span>
+                    }
+                </div>
+
+                <!-- Follow / Edit Button -->
+                <div class="profile-action-container">
+                    @if (!Model.IsSelf)
+                    {
+                        <form asp-controller="User" asp-action="ToggleFollow" method="post">
+                            <input type="hidden" name="targetUserId" value="@Model.User.UserId" />
+                            <button type="submit" class="follow-action-btn @(Model.IsCurrentlyFollowing ? "following" : "")">
+                                @(Model.IsCurrentlyFollowing ? "Following" : "Follow")
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Profile" asp-action="Edit" class="btn btn-outline-dark rounded-pill px-4 font-weight-bold">Edit Profile</a>
+                    }
+                </div>
+            </div>
+
+            <!-- User Bio & Meta -->
+            <div class="profile-details-group">
+                <h2 class="profile-username">@($"@{Model.User.UserName}")</h2>
+                <p class="profile-bio">@Model.User.Bio</p>
+
+                @if (!string.IsNullOrEmpty(Model.User.Location))
+                {
+                    <div class="profile-location">
+                        <i class="fa-solid fa-location-dot"></i> @Model.User.Location
+                    </div>
+                }
+
+                <div class="profile-stats-row">
+                    <span><strong>@Model.FollowingCount</strong> Following</span>
+                    <span><strong>@Model.FollowersCount</strong> Followers</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Posts Section -->
+    <div class="profile-posts-section">
+        <h3 class="profile-posts-title">Posts</h3>
+
+        @if (Model.Posts != null && Model.Posts.Any())
+        {
+            <div class="posts-list">
+                @foreach (var post in Model.Posts)
+                {
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div class="post-avatar-box">
+                                @if (!string.IsNullOrEmpty(Model.User.ProfilePicUrl))
+                                {
+                                    <img src="@Model.User.ProfilePicUrl" alt="Avatar" class="img-circle-fit" />
+                                }
+                                else
+                                {
+                                    <span>@Model.User.UserName.Substring(0, 1).ToUpper()</span>
+                                }
+                            </div>
+                            <div class="post-author-meta">
+                                <span class="post-username">@($"@{Model.User.UserName}")</span>
+                                <span class="post-timestamp">@post.Timestamp.ToString("g")</span>
+                            </div>
+                        </div>
+
+                        <div class="post-body">
+                            <p>@post.PostText</p>
+                        </div>
+
+                        <div class="post-footer-metrics">
+                            <span><i class="fa-regular fa-heart text-danger"></i> @post.LikesCount</span>
+                            <span><i class="fa-regular fa-comment text-secondary"></i> @post.CommentsCount</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">No posts available from this user yet.</p>
+        }
+    </div>
+</div>

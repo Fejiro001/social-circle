@@ -6,30 +6,29 @@ namespace SocialCircle.BLL
     public class StoryService
     {
         private readonly StoryRepo _storyRepo;
-        private readonly StoryViewRepo _viewRepo;
-
-        public StoryService(StoryRepo storyRepo, StoryViewRepo viewRepo)
+        private readonly StoryViewService _storyViewService;
+        public StoryService(StoryRepo storyRepo, StoryViewService storyViewService)
         {
             _storyRepo = storyRepo;
-            _viewRepo = viewRepo;
+            _storyViewService = storyViewService;
         }
 
         public void CreateStory(int userId, string content)
         {
+            var now = DateTime.Now;
             var story = new Story
             {
                 UserId = userId,
                 StoryContent = content,
-                Timestamp = DateTime.Now
+                Timestamp = now,
+                ExpirationTime = now.AddHours(24)
             };
             _storyRepo.AddStory(story);
         }
 
         public List<Story> GetActiveStories()
         {
-            // Hide rows older than 24 hours using a computed database expiration check
             return _storyRepo.FetchActiveStories()
-                .Where(s => s.ExpirationTime.HasValue && s.ExpirationTime.Value > DateTime.Now)
                 .OrderByDescending(s => s.Timestamp)
                 .ToList();
         }
@@ -46,7 +45,7 @@ namespace SocialCircle.BLL
                 UserId = currentUserId,
                 ViewDateTime = DateTime.Now
             };
-            _viewRepo.InsertStoryView(viewRecord);
+            _storyViewService.RecordStoryView(storyId, currentUserId);
 
             return targetStory;
         }

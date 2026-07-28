@@ -1,11 +1,12 @@
 /* wwwroot/css/site.css */
 :root {
     --bg-card: #f8fafc;
-    --bg-main: #ffffff;
+    --bg-main: #f7f7fb;
     --text-primary: #0f172a;
     --text-muted: #64748b;
     --border-color: #B3B4B7;
     --border-light: #f1f5f9;
+    --accent-primary-light: #DAD3F7;
     --accent-primary: #6366f1;
     --accent-primary-hover: #4f46e5;
     --accent-info: #0ea5e9;
@@ -188,4 +189,371 @@ textarea.input-validation-error {
 input.input-validation-error:focus,
 textarea.input-validation-error:focus {
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+/* =========================================
+   Left sidebar
+   ========================================= */
+.sidebar-brand-container {
+    margin-bottom: 2rem;
+    padding: 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.sidebar-logo-img {
+    height: 36px;
+    width: 36px;
+    border-radius: 10px;
+}
+
+.sidebar-nav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex-grow: 1;
+}
+
+.sidebar-footer-account {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1.5px solid #f3f4f6;
+}
+
+.sidebar-account-text-group {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-account-name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-account-handle {
+    color: #6b7280;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-brand-link {
+    text-decoration: none;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.sidebar-nav-item {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 50rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-weight: 700;
+}
+
+.sidebar-nav-item i {
+    font-size: 1.25rem;
+    width: 24px;
+    text-align: center;
+}
+
+.sidebar-nav-item:hover,
+.sidebar-nav-item.active {
+    background-color: #f3f4f6;
+    color: #4f46e5;
+}
+
+.sidebar-account-link {
+    text-decoration: none;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-radius: 50rem;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-account-link:hover {
+    background-color: #f3f4f6;
+}
+
+.sidebar-account-avatar {
+    width: 52px;
+    height: 52px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: var(--accent-primary-light);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   Suggested Users Widget Container
+   ========================================= */
+.suggested-users-card {
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.suggested-users-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 2px;
+}
+
+.suggested-users-subtitle {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 12px;
+}
+
+/* User List Layout */
+.suggested-users-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suggested-user-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.suggested-user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+}
+
+/* Avatar Styling */
+.suggested-avatar-box {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.img-circle-fit {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text & Handles */
+.suggested-user-text {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.suggested-username {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #212529;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.suggested-username:hover {
+    text-decoration: underline;
+}
+
+.suggested-handle {
+    font-size: 0.75rem;
+    color: #6c757d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Follow Button */
+.follow-action-btn {
+    background-color: #111827;
+    color: #ffffff;
+    border: none;
+    border-radius: 50rem;
+    padding: 4px 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+.follow-action-btn:hover {
+    background-color: #343a40;
+}
+
+.follow-action-btn.following {
+    background-color: #ffffff;
+    color: #111827;
+    border: 1px solid #d1d5db;
+}
+
+.follow-action-btn.following:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.no-suggestions-text {
+    font-size: 0.85rem;
+    color: #6c757d;
+    text-align: center;
+    margin: 12px 0 0 0;
+}
+
+/* =========================================
+   Users Stories
+   ========================================= */
+.story-feed-container {
+    display: flex;
+    gap: 15px;
+    padding: 1rem 0;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+/* Made scrollbar slimmer */
+.story-feed-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.story-feed-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.story-feed-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.story-feed-container::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.story-bubble {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    justify-content: space-between;
+}
+
+/* Add Story Button */
+.add-story .add-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px dashed #cbd5e1;
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.add-story .add-btn:hover {
+    background-color: #e2e8f0;
+    border-color: #94a3b8;
+}
+
+.avatar-ring {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-primary);
+    background-color: var(--accent-primary-light);
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+.img-circle-fit {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.story-author {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.close-btn {
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.close-btn:hover {
+    color: #666;
+}
+
+/* Custom Story Modal Card Overrides */
+.custom-modal-card {
+    background: #fff;
+    border-radius: 16px;
+    border: none;
+    padding: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.story-textarea {
+    resize: none;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 12px;
+    font-size: 0.95rem;
+}
+
+.story-textarea:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.post-story-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 8px;
 }

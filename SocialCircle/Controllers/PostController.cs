@@ -20,12 +20,23 @@ namespace SocialCircle.Controllers
         {
             int currentUserId = CurrentUser.Id;
             List<Post> posts = _postService.GetFeedPosts(currentUserId);
-
             User currentUser = _userService.GetUserById(currentUserId);
+
+            var feedPosts = posts.Select(p => new FeedPostViewModel
+            {
+                PostId = p.PostId,
+                PostText = p.PostText,
+                Timestamp = p.Timestamp,
+                UserId = p.UserId,
+                UserName = p.User?.UserName ?? "User",
+                ProfilePicUrl = p.User?.ProfilePicUrl,
+                LikesCount = _postService.GetLikesCount(p.PostId),
+                CommentsCount = _postService.GetCommentsCount(p.PostId)
+            }).ToList();
 
             NewsfeedViewModel vm = new NewsfeedViewModel
             {
-                Posts = posts,
+                Posts = feedPosts,
                 CurrentUser = currentUser
             };
 

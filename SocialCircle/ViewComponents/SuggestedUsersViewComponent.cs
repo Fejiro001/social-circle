@@ -19,7 +19,7 @@ namespace SocialCircle.ViewComponents
             {
                 SuggestedUsers = _userService.GetSuggestedUsers(CurrentUser.Id)
             };
-            return View("_SuggestedUsers", vm);
+            return View(vm);
         }
     }
 }

@@ -17,6 +17,19 @@
             <p class="sc-empty-text text-center mt-4">No past messages. Say hello to start the conversation!</p>
         }
 
+        @foreach (var msg in Model.Messages)
+        {
+            // Separates messages left and right based on sender
+            string contextSide = (msg.SenderId == Model.CurrentUserId) ? "sc-sent" : "sc-received";
+
+            <div class="sc-msg-wrapper @contextSide">
+                <div class="sc-msg-bubble">
+                    <p class="sc-msg-text">@msg.MessageText</p>
+                    <span class="sc-msg-time">@msg.Timestamp.ToString("HH:mm")</span>
+                </div>
+            </div>
+        }
+    </div>
+
 
 </div>
-

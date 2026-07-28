@@ -945,3 +945,109 @@ textarea.input-validation-error:focus {
     flex-grow: 1;
     min-width: 0;
 }
+
+
+/* =========================================
+   User Profile Follow Links
+   ========================================= */
+.profile-stat-link {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.profile-stat-link span {
+    color: #111827;
+    font-weight: 700;
+}
+
+.profile-stat-link:hover {
+    color: var(--accent-primary-hover);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+
+    span {
+        color: var(--accent-primary-hover);
+    }
+}
+
+/* =========================================
+   Newsfeed
+   ========================================= */
+.post-user-info {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.post-username {
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: .875rem;
+    color: #212529;
+}
+
+.post-user-info:hover {
+    .post-username {
+        text-decoration: underline;
+        color: var(--accent-primary);
+    }
+}
+
+/* =========================================
+   Following and Follower list
+   ========================================= */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #4b5563;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.back-link:hover {
+    color: #111827;
+}
+
+/* Tabs Header */
+.follow-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.follow-tab-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    transition: all 0.2s ease;
+}
+
+.follow-tab-btn:hover {
+    background-color: #e5e7eb;
+    color: #111827;
+}
+
+.follow-tab-btn.active {
+    background-color: var(--accent-primary);
+    color: #ffffff;
+}
+
+/* User Info Layout */
+.follow-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    text-decoration: none;
+    flex-grow: 1;
+    min-width: 0;
+}

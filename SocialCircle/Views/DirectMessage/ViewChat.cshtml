@@ -31,5 +31,12 @@
         }
     </div>
 
-
+    <!-- Message submission form -->
+    <div class="sc-chat-input-row">
+        <form asp-action="SendMessage" method="post" class="sc-chat-form">
+            <input type="hidden" name="ReceiverId" value="@Model.TargetUserId" />
+            <input type="text" name="MessageText" class="sc-input-control" placeholder="Type message..." required autocomplete="off" maxlength="1000" />
+            <button type="submit" class="sc-send-control">Send</button>
+        </form>
+    </div>
 </div>

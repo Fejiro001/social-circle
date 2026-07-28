@@ -6,12 +6,11 @@ namespace SocialCircle.BLL
     public class StoryService
     {
         private readonly StoryRepo _storyRepo;
-        private readonly StoryViewRepo _viewRepo;
-
-        public StoryService(StoryRepo storyRepo, StoryViewRepo viewRepo)
+        private readonly StoryViewService _storyViewService;
+        public StoryService(StoryRepo storyRepo, StoryViewService storyViewService)
         {
             _storyRepo = storyRepo;
-            _viewRepo = viewRepo;
+            _storyViewService = storyViewService;
         }
 
         public void CreateStory(int userId, string content)
@@ -46,7 +45,7 @@ namespace SocialCircle.BLL
                 UserId = currentUserId,
                 ViewDateTime = DateTime.Now
             };
-            _viewRepo.InsertStoryView(viewRecord);
+            _storyViewService.RecordStoryView(storyId, currentUserId);
 
             return targetStory;
         }

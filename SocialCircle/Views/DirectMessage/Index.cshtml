@@ -1,5 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<SocialCircle.Models.InboxViewModel>
+
 @{
+    ViewData["Title"] = "Direct Messages Inbox";
 }
+
+<div class="sc-inbox-container">
+    <div class="sc-inbox-header">
+        <h2>Your Messages</h2>
+    </div>
+
+    <div class="sc-thread-list">
+        @if (!Model.Any())
+        {
+            <p class="sc-empty-text">No active conversations found. Start a chat to begin!</p>
+        }
+
+
+    </div>
+</div>

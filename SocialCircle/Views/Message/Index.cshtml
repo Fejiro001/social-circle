@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SocialCircle.Models.InboxViewModel>
+
+@{
+    Layout = "_AppLayout";
+    ViewData["Title"] = "Messages Inbox";
+}
+
+<div class="dm-inbox-container">
+    <div class="dm-inbox-header">
+        <h2 class="dm-inbox-title">Your Messages</h2>
+    </div>
+
+    <div class="dm-thread-list">
+        @if (!Model.Any())
+        {
+            <p class="dm-empty-text">No active conversations found. Start a chat to begin!</p>
+        }
+
+        @foreach (var thread in Model)
+        {
+            <!-- click target that links straight to the targeted chat log -->
+            <a asp-action="ViewChat" asp-route-targetUserId="@thread.TargetUserId" class="dm-thread-row">
+                <div class="dm-avatar-column">
+                    <div class="dm-avatar-box">
+                        <img src="@thread.TargetAvatar" class="dm-avatar-fit" alt="Profile Picture" />
+                    </div>
+                </div>
+
+                <div class="dm-details-column">
+                    <div class="dm-meta-row">
+                        <span class="dm-username">@thread.TargetUserName</span>
+                        <span class="dm-timestamp">@thread.LastMessageTimestamp.ToString("MMM dd, HH:mm")</span>
+                    </div>
+
+                    <div class="dm-preview-row">
+                        <p class="dm-message-preview @(thread.IsUnread ? "dm-message-unread" : "")">
+                            @thread.LastMessageText
+                        </p>
+                        @if (thread.IsUnread)
+                        {
+                            <span class="dm-badge-unread">New</span>
+                        }
+                    </div>
+                </div>
+            </a>
+        }
+    </div>
+</div>

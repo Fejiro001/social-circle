@@ -1,4 +1,5 @@
-﻿using SocialCircle.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialCircle.Models;
 
 namespace SocialCircle.DAL
 {
@@ -19,7 +20,10 @@ namespace SocialCircle.DAL
 
         public List<Story> FetchActiveStories()
         {
-            return _context.Stories.ToList();
+            return _context.Stories
+                .Include(s => s.User)
+                .Where(s => s.ExpirationTime == null || s.ExpirationTime > DateTime.Now)
+                .ToList();
         }
     }
 }

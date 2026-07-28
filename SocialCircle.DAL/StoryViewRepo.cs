@@ -1,4 +1,5 @@
-﻿using SocialCircle.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialCircle.Models;
 
 namespace SocialCircle.DAL
 {
@@ -19,7 +20,10 @@ namespace SocialCircle.DAL
 
         public List<StoryView> FetchStoryViewers(int storyId)
         {
-            return _context.StoryViews.Where(v => v.StoryId == storyId).ToList();
+            return _context.StoryViews
+                .Where(v => v.StoryId == storyId)
+                .Include(v => v.User)
+                .ToList();
         }
     }
 }

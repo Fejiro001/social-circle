@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SocialCircle.BLL;
+using SocialCircle.Helpers;
 using SocialCircle.Models;
 
 namespace SocialCircle.Controllers
@@ -8,7 +9,6 @@ namespace SocialCircle.Controllers
     {
         private readonly StoryService _storyService;
         private readonly StoryViewService _storyViewService;
-        private const int CurrentUserMockID = 1;
 
         public StoryController(StoryService storyService, StoryViewService storyViewService)
         {
@@ -19,31 +19,31 @@ namespace SocialCircle.Controllers
         public IActionResult Index()
         {
             var activeStories = _storyService.GetActiveStories();
+
             var viewModelList = activeStories.Select(s => new StoryViewModel
             {
                 StoryId = s.StoryId,
                 StoryContent = s.StoryContent,
                 Timestamp = s.Timestamp,
-                AuthorName = "User_" + s.UserId,
-                AuthorAvatar = $"{s.UserId}" //ProfilePicURL
+                AuthorName = s.User.UserName,
+                AuthorAvatar = s.User?.ProfilePicUrl
             }).ToList();
 
             return View(viewModelList); 
         }
         public IActionResult ViewStory(int storyId)
         {
-            var story = _storyService.LogStoryView(storyId, CurrentUserMockID);
-            if (story == null) return NotFound("The story time has expired.");
-
-            _storyViewService.RecordStoryView(storyId, CurrentUserMockID);
+            int currentUserId = CurrentUser.Id;
+            var story = _storyService.LogStoryView(storyId, currentUserId);
+            if (story == null) return NotFound("The story time has expired or does not exist.");
 
             var model = new StoryViewModel
             {
                 StoryId = story.StoryId,
                 StoryContent = story.StoryContent,
                 Timestamp = story.Timestamp,
-                AuthorName = "User_" + story.UserId,
-                AuthorAvatar = $"{story.UserId}" //ProfilePicURL
+                AuthorName = story.User.UserName,
+                AuthorAvatar = story.User.ProfilePicUrl,
             };
 
             ViewBag.TotalViews = _storyViewService.GetTotalViewCount(storyId);
@@ -51,16 +51,18 @@ namespace SocialCircle.Controllers
             return View(model);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken] // Protects local SQL database
+        [ValidateAntiForgeryToken]
         public IActionResult UploadStory(string storyContent)
         {
+            int currentUserId = CurrentUser.Id;
+
             if (string.IsNullOrWhiteSpace(storyContent))
             {
-                ModelState.AddModelError("storyContent", "Story text content cannot be blank.");
+                TempData["ErrorMessage"] = "Story text content cannot be blank.";
                 return RedirectToAction("Index");
             }
 
-            _storyService.CreateStory(CurrentUserMockID, storyContent);
+            _storyService.CreateStory(currentUserId, storyContent);
 
             TempData["SuccessMessage"] = "Story successfully posted!";
             return RedirectToAction("Index");

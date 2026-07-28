@@ -12,15 +12,9 @@
     </div>
 }
 
-<div class="create-post-card">
-    <div class="create-post-header">
-        <div class="story-circle">
-            <i class="fa-solid fa-plus"></i>
-        </div>
-        <p class="story-label">Your Story</p>
-        <ul></ul>
-    </div>
+@await Component.InvokeAsync("StoryFeed")
 
+<div class="create-post-card">
     <form asp-controller="Post" asp-action="CreatePost" method="post">
         <div class="create-post-form-row">
             <div class="avatar-circle">

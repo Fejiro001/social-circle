@@ -1,0 +1,51 @@
+﻿@model List<SocialCircle.Models.StoryViewModel>
+
+<div class="story-feed-container">
+    <!-- Add Story Button -->
+    <div class="story-bubble add-story">
+        <button class="add-btn" data-bs-toggle="modal" data-bs-target="#addStoryModal"><i class="fa-solid fa-plus"></i></button>
+        <span class="story-author">Your story</span>
+    </div>
+
+    <!-- Active Stories -->
+    @foreach (var story in Model)
+    {
+        <a asp-controller="Story" asp-action="ViewStory" asp-route-storyId="@story.StoryId" class="story-bubble">
+            <div class="avatar-ring">
+                <img src="@story.AuthorAvatar" alt="@story.AuthorName" class="img-circle-fit" />
+            </div>
+            <span class="story-author">@story.AuthorName</span>
+        </a>
+    }
+</div>
+
+<!-- Add New story modal -->
+<div class="modal fade" id="addStoryModal" tabindex="-1" aria-labelledby="addStoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-modal-card">
+
+            <div class="modal-header border-0 pb-0">
+                <div>
+                    <h5 class="modal-title fw-bold" id="addStoryModalLabel">Share a Story</h5>
+                    <p class="text-muted small mb-0">Stories disappear after 24 hours.</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form asp-controller="Story" asp-action="UploadStory" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea name="storyContent" class="form-control story-textarea" rows="4" placeholder="Share something with your circle..." required></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 pt-0">
+                    <button type="submit" class="btn btn-primary post-story-btn">Post Story</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

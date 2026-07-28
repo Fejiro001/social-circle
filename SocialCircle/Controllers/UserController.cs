@@ -58,7 +58,7 @@ namespace SocialCircle.Controllers
 
                 _followService.FollowUser(newFollow);
             }
-            return RedirectToAction("ViewProfile", new { id = targetUserId });
+            return RedirectToAction("Index", "Post");
         }
     }
 }

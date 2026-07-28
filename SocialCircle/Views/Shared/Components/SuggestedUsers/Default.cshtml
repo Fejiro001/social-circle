@@ -28,7 +28,7 @@
                     </div>
                     <form asp-controller="User" asp-action="ToggleFollow" method="post">
                         <input type="hidden" name="targetUserId" value="@user.UserId" />
-                        <button type="submit" class="follow-action-btn">Follow</button>
+                        <button type="submit" class="follow-action-btn @(user.IsFollowing ? "following" : "")">@(user.IsFollowing ? "Following" : "Follow")</button>
                     </form>
                 </div>
             }

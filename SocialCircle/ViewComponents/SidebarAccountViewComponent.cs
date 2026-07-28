@@ -20,6 +20,7 @@ namespace SocialCircle.ViewComponents
 
             var vm = new SidebarAccountViewModel
             {
+                UserId = user.UserId,
                 DisplayName = user.UserName,
                 Handle = $"@{user.UserName}",
                 ProfilePicUrl = user.ProfilePicUrl,

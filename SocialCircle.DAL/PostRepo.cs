@@ -32,6 +32,8 @@ namespace SocialCircle.DAL
                 .ToList();
         }
 
+        public Post GetPostById(int postId) => _context.Posts.Find(postId);
+
         public void AddPost(Post post)
         {
             _context.Posts.Add(post);

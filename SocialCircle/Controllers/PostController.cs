@@ -89,5 +89,37 @@ namespace SocialCircle.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            int currentUserId = CurrentUser.Id;
+
+            var post = _postService.GetPostById(id);
+            if (post == null) return NotFound();
+
+            var rawComments = _commentService.GetPostComments(id);
+
+            var commentVM = rawComments.Select(c => new CommentViewModel
+            {
+                CommentId = c.CommentId,
+                CommentText = c.CommentText,
+                AuthorName = c.User.UserName,
+                Timestamp = c.Timestamp
+            }).ToList();
+
+            var vm = new PostDetailsViewModel
+            {
+                Post = post,
+                Interactions = new PostInteractionsViewModel
+                {
+                    TotalLikes = _postLikeService.GetTotalLikes(id),
+                    HasCurrentUserLiked = _postLikeService.HasCurrentUserLiked(id, currentUserId),
+                    Comments = commentVM
+                }
+            };
+
+            return View(vm);
+        }
     }
 }

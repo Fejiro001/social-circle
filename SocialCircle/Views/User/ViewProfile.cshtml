@@ -97,7 +97,7 @@
 
                         <div class="post-footer-metrics">
                             <span><i class="fa-regular fa-heart"></i> @post.LikesCount</span>
-                            <span><i class="fa-regular fa-comment text-secondary"></i> @post.CommentsCount</span>
+                            <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId"><i class="fa-regular fa-comment text-secondary"></i> @post.CommentsCount</a>
                         </div>
                     </div>
                 }

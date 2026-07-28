@@ -1,0 +1,38 @@
+﻿@model SocialCircle.Models.PostDetailsViewModel
+
+<div class="post-details-container">
+    <!-- Post Content Here -->
+    <h2>@Model.Post.Content</h2>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h3>Comments (@Model.Interactions.Comments.Count)</h3>
+
+        <!-- Add Comment Form -->
+        <form asp-controller="Comment" asp-action="AddComment" method="post" class="comment-form">
+            <input type="hidden" name="PostId" value="@Model.Post.PostId" />
+            <textarea name="CommentText" placeholder="Write a comment..." required></textarea>
+            <button type="submit" class="btn-primary">Post Comment</button>
+        </form>
+
+        <!-- Render Comment List using CommentViewModel -->
+        <div class="comments-list">
+            @foreach (var comment in Model.Interactions.Comments)
+            {
+                <div class="comment-card">
+                    <div class="comment-meta">
+                        <span class="comment-author">@($"@{comment.AuthorName}")</span>
+                        <span class="comment-time">@comment.Timestamp.ToString("g")</span>
+                    </div>
+                    <p class="comment-text">@comment.CommentText</p>
+
+                    <!-- Delete button (if user is author) -->
+                    <form asp-controller="Comment" asp-action="RemoveComment" method="post">
+                        <input type="hidden" name="commentId" value="@comment.CommentId" />
+                        <button type="submit" class="text-danger-btn">Delete</button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</div>

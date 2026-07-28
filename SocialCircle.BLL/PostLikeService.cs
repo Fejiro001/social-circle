@@ -40,9 +40,9 @@ namespace SocialCircle.BLL
             return _postLikeRepo.GetTotalLikes(postId);
         }
 
-        public bool HasCurrentUserLiked(int postId)
+        public bool HasCurrentUserLiked(int postId, int currentUserId)
         {
-            return _postLikeRepo.CheckIfUserLiked(1, postId);
+            return _postLikeRepo.CheckIfUserLiked(currentUserId, postId);
         }
     }
 }

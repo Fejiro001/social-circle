@@ -62,17 +62,17 @@
                     </a>
                 </div>
 
-                <div class="post-content">
+                <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId" class="post-content">
                     <p class="post-text">@post.PostText</p>
-                </div>
+                </a>
 
                 <div class="post-footer-actions">
                     <button class="action-btn">
                         <i class="fa-regular fa-heart"></i> <span>@post.LikesCount</span>
                     </button>
-                    <button class="action-btn">
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId" class="action-btn">
                         <i class="fa-regular fa-comment"></i> <span>@post.CommentsCount</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         }

@@ -30,6 +30,8 @@ namespace SocialCircle.BLL
             return _postRepo.GetUsersPosts(targetUserId);
         }
 
+        public Post GetPostById(int postId) => _postRepo.GetPostById(postId);
+
         public int GetLikesCount(int postId) => _postRepo.GetLikesCount(postId);
 
         public int GetCommentsCount(int postId) => _postRepo.GetCommentsCount(postId);

@@ -2,7 +2,6 @@
 using SocialCircle.BLL;
 using SocialCircle.Helpers;
 using SocialCircle.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SocialCircle.Controllers
 {
@@ -18,6 +17,7 @@ namespace SocialCircle.Controllers
             _followService = followService;
             _postService = postService;
         }
+
 
         [HttpGet]
         public IActionResult ViewProfile(int? id)
@@ -58,7 +58,7 @@ namespace SocialCircle.Controllers
         }
 
         [HttpPost]
-        public IActionResult ToggleFollow(int targetUserId, string returnUrl = null)
+        public IActionResult ToggleFollow(int targetUserId)
         {
             int currentUserId = CurrentUser.Id;
             bool isFollowing = _followService.IsFollowing(currentUserId, targetUserId);
@@ -77,10 +77,21 @@ namespace SocialCircle.Controllers
 
                 _followService.FollowUser(newFollow);
             }
+            // Browser sends a Referer header telling the server, the user was just looking at this specific web address.
+            // Capture the page the user came from automatically
+            string referer = Request.Headers.Referer.ToString();
 
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            if (!string.IsNullOrEmpty(referer))
             {
-                return RedirectToAction(returnUrl);
+                // Convert it to a relative path. So instead of for example, 'https://localhost:7195/User/Followers/1'
+                // It will be '/User/Followers/1'
+                Uri uri = new Uri(referer);
+                string relativePath = uri.PathAndQuery;
+
+                if (Url.IsLocalUrl(relativePath))
+                {
+                    return Redirect(relativePath);
+                }
             }
             return RedirectToAction("Index", "Post");
         }

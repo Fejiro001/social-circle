@@ -8,11 +8,16 @@ namespace SocialCircle.Controllers
     public class PostController : Controller
     {
         private readonly PostService _postService;
+        private readonly PostLikeService _postLikeService;
         private readonly UserService _userService;
-        public PostController(PostService postService, UserService userService)
+        private readonly CommentService _commentService;
+
+        public PostController(PostService postService, PostLikeService postLikeService, UserService userService, CommentService commentService)
         {
             _postService = postService;
+            _postLikeService = postLikeService;
             _userService = userService;
+            _commentService = commentService;
         }
 
         [HttpGet]
@@ -59,6 +64,29 @@ namespace SocialCircle.Controllers
             };
 
             _postService.CreatePost(newPost);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult ToggleLike(int postId)
+        {
+            int currentUserId = CurrentUser.Id;
+            _postLikeService.ToggleLike(postId, currentUserId);
+
+            // Safely return back to Feed, Profile, or Detail view
+            string referer = Request.Headers.Referer.ToString();
+
+            if (!string.IsNullOrEmpty(referer))
+            {
+                Uri uri = new Uri(referer);
+                string relativePath = uri.PathAndQuery;
+
+                if (Url.IsLocalUrl(relativePath))
+                {
+                    return Redirect(relativePath);
+                }
+            }
+
             return RedirectToAction("Index");
         }
     }

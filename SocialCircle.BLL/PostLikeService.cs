@@ -12,10 +12,8 @@ namespace SocialCircle.BLL
             _postLikeRepo = postLikeRepo;
         }
 
-        public void ToggleLike(int postId)
+        public void ToggleLike(int postId, int currentUserId)
         {
-            int currentUserId = 1;
-
             bool alreadyLiked = _postLikeRepo.CheckIfUserLiked(currentUserId, postId);
 
             if (alreadyLiked)

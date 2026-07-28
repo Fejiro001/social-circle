@@ -3,44 +3,40 @@
 @{
     ViewData["Title"] = "Chat with " + Model.TargetUserName;
 }
-
-<div class="sc-chat-box">
-    <!-- shows who you are talking to -->
-    <div class="sc-chat-header">
-        <h4>Chatting with: @Model.TargetUserName</h4>
+<!-- shows who you are talking to -->
+<div class="chat-interface-card">
+    <div class="chat-interface-header">
+        <h4 class="chat-interface-title">Chatting with: @Model.TargetUserName</h4>
     </div>
-
     <!-- Chronological message ordering -->
-    <div class="sc-chat-stream" id="chatStream">
+    <div class="chat-message-stream" id="chatStream">
         @if (!Model.Messages.Any())
         {
-            <p class="sc-empty-text text-center mt-4">No past messages. Say hello to start the conversation!</p>
+            <p class="dm-empty-text text-center mt-4">No past messages. Say hello to start the conversation!</p>
         }
 
         @foreach (var msg in Model.Messages)
         {
+            string placementSide = (msg.SenderId == Model.CurrentUserId) ? "chat-msg-sent" : "chat-msg-received";
             // Separates messages left and right based on sender
-            string contextSide = (msg.SenderId == Model.CurrentUserId) ? "sc-sent" : "sc-received";
-
-            <div class="sc-msg-wrapper @contextSide">
-                <div class="sc-msg-bubble">
-                    <p class="sc-msg-text">@msg.MessageText</p>
-                    <span class="sc-msg-time">@msg.Timestamp.ToString("HH:mm")</span>
+            <div class="chat-message-row @placementSide">
+                <div class="chat-bubble">
+                    <p class="chat-bubble-text">@msg.MessageText</p>
+                    <span class="chat-bubble-time">@msg.Timestamp.ToString("HH:mm")</span>
                 </div>
             </div>
         }
     </div>
-
     <!-- Message submission form -->
-    <div class="sc-chat-input-row">
-        <form asp-action="SendMessage" method="post" class="sc-chat-form">
+    <div class="chat-input-panel">
+        <form asp-action="SendMessage" method="post" class="chat-input-form">
             <input type="hidden" name="ReceiverId" value="@Model.TargetUserId" />
-            <input type="text" name="MessageText" class="sc-input-control" placeholder="Type message..." required autocomplete="off" maxlength="1000" />
-            <button type="submit" class="sc-send-control">Send</button>
+
+            <input type="text" name="MessageText" class="form-control chat-textbox" placeholder="Type a message..." required autocomplete="off" maxlength="1000" />
+            <button type="submit" class="btn-primary chat-submit-btn">Send</button>
         </form>
     </div>
 </div>
-
 <!-- will automatically scroll to the newest text at the bottom -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {

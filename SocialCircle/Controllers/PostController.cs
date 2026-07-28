@@ -36,7 +36,8 @@ namespace SocialCircle.Controllers
                 UserName = p.User.UserName,
                 ProfilePicUrl = p.User?.ProfilePicUrl,
                 LikesCount = _postService.GetLikesCount(p.PostId),
-                CommentsCount = _postService.GetCommentsCount(p.PostId)
+                CommentsCount = _postService.GetCommentsCount(p.PostId),
+                HasCurrentUserLiked = _postLikeService.HasCurrentUserLiked(p.PostId, currentUserId)
             }).ToList();
 
             NewsfeedViewModel vm = new NewsfeedViewModel

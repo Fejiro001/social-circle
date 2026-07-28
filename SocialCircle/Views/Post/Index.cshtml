@@ -12,6 +12,7 @@
     </div>
 }
 
+@* Display all active stories *@
 @await Component.InvokeAsync("StoryFeed")
 
 <div class="create-post-card">
@@ -57,7 +58,7 @@
                         </div>
                         <div>
                             <h6 class="post-username">@($"@{post.UserName}")</h6>
-                            <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy")</span>
+                            <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy HH:mm tt")</span>
                         </div>
                     </a>
                 </div>
@@ -67,9 +68,22 @@
                 </a>
 
                 <div class="post-footer-actions">
-                    <button class="action-btn">
-                        <i class="fa-regular fa-heart"></i> <span>@post.LikesCount</span>
-                    </button>
+                    <!-- Like Form -->
+                    <form asp-controller="Post" asp-action="ToggleLike" asp-route-postId="@post.PostId" method="post" class="like-form">
+                        <button type="submit" class="action-btn @(post.HasCurrentUserLiked ? "liked" : "")">
+                            @if (post.HasCurrentUserLiked)
+                            {
+                                <i class="fa-solid fa-heart text-danger"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-regular fa-heart"></i>
+                            }
+                            <span>@post.LikesCount</span>
+                        </button>
+                    </form>
+
+                    <!-- Comment Link -->
                     <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId" class="action-btn">
                         <i class="fa-regular fa-comment"></i> <span>@post.CommentsCount</span>
                     </a>

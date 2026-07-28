@@ -996,6 +996,26 @@ textarea.input-validation-error:focus {
     }
 }
 
+.post-text{
+    padding-block: 1rem;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    text-decoration: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    color: var(--accent-primary);
+}
+
 /* =========================================
    Following and Follower list
    ========================================= */
@@ -1050,4 +1070,13 @@ textarea.input-validation-error:focus {
     text-decoration: none;
     flex-grow: 1;
     min-width: 0;
+}
+
+/* Post Comments */
+.comment-input-form {
+    display: flex;
+    align-items: center;
+    background-color: #f8fafc;
+    border-radius: 9999px;
+    padding: 0.35rem 0.35rem 0.35rem 1.25rem;
 }

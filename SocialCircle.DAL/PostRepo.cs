@@ -32,7 +32,9 @@ namespace SocialCircle.DAL
                 .ToList();
         }
 
-        public Post GetPostById(int postId) => _context.Posts.Find(postId);
+        public Post GetPostById(int postId) => _context.Posts
+            .Include(p => p.User)
+            .FirstOrDefault(p => p.PostId == postId);
 
         public void AddPost(Post post)
         {

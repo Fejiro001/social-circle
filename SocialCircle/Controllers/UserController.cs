@@ -9,10 +9,12 @@ namespace SocialCircle.Controllers
     {
         private readonly UserService _userService;
         private readonly UserFollowService _followService;
-        public UserController(UserService service, UserFollowService followService)
+        private readonly PostService _postService;
+        public UserController(UserService service, UserFollowService followService, PostService postService)
         {
             _userService = service;
             _followService = followService;
+            _postService = postService;
         }
 
         [HttpGet]
@@ -26,13 +28,26 @@ namespace SocialCircle.Controllers
                 return NotFound();
             }
 
+            var feedPosts = profile.Posts.Select(p => new FeedPostViewModel
+            {
+                PostId = p.PostId,
+                PostText = p.PostText,
+                Timestamp = p.Timestamp,
+                UserId = p.UserId,
+                UserName = profile.User.UserName,
+                ProfilePicUrl = profile.User.ProfilePicUrl,
+                LikesCount = _postService.GetLikesCount(p.PostId),
+                CommentsCount = _postService.GetCommentsCount(p.PostId)
+            }).ToList();
+
             UserProfileViewModel vm = new UserProfileViewModel
             {
                 User = profile.User,
-                Posts = profile.Posts,
+                Posts = feedPosts,
                 FollowersCount = profile.FollowersCount,
                 FollowingCount = profile.FollowingCount,
-                IsCurrentlyFollowing = profile.IsCurrentlyFollowing
+                IsCurrentlyFollowing = profile.IsCurrentlyFollowing,
+                IsSelf = profile.User.UserId == currentUserId
             };
 
             return View(vm);

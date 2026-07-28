@@ -46,10 +46,10 @@
                 <div class="post-header">
                     <div class="post-user-info">
                         <div class="post-avatar-box">
-                            <img src="@post.User.ProfilePicUrl" alt="@post.User.UserName profile picture" class="img-circle-fit" />
+                            <img src="@post.ProfilePicUrl" alt="@post.UserName profile picture" class="img-circle-fit" />
                         </div>
                         <div>
-                            <h6 class="post-username">@($"@{post.User.UserName}")</h6>
+                            <h6 class="post-username">@($"@{post.UserName}")</h6>
                             <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy")</span>
                         </div>
                     </div>

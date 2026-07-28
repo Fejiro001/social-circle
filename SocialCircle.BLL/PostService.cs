@@ -1,4 +1,5 @@
-﻿using SocialCircle.DAL;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialCircle.DAL;
 using SocialCircle.Models;
 
 namespace SocialCircle.BLL
@@ -28,6 +29,10 @@ namespace SocialCircle.BLL
         {
             return _postRepo.GetUsersPosts(targetUserId);
         }
+
+        public int GetLikesCount(int postId) => _postRepo.GetLikesCount(postId);
+
+        public int GetCommentsCount(int postId) => _postRepo.GetCommentsCount(postId);
 
         public void CreatePost(Post post)
         {

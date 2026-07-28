@@ -2,6 +2,6 @@
 {
     public static class CurrentUser
     {
-        public const int Id = 2;
+        public const int Id = 1;
     }
 }

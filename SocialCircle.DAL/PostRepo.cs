@@ -20,6 +20,10 @@ namespace SocialCircle.DAL
                 .ToList();
         }
 
+        public int GetLikesCount(int postId) => _context.PostLikes.Count(l => l.PostId == postId);
+
+        public int GetCommentsCount(int postId) => _context.Comments.Count(c => c.PostId == postId);
+
         public List<Post> GetUsersPosts(int targetUserId)
         {
             return _context.Posts

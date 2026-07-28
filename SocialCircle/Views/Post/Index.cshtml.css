@@ -63,19 +63,6 @@
     margin-bottom: .5rem;
 }
 
-.post-user-info {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-}
-
-.post-username {
-    margin-bottom: 0;
-    font-weight: 700;
-    font-size: .875rem;
-    color: #212529;
-}
-
 .post-content {
     margin-bottom: 1rem;
 }

@@ -28,7 +28,7 @@
                 }
             </div>
             <div class="create-post-textarea-container">
-                <textarea name="PostText" class="create-post-textarea" rows="3" placeholder="Share something with your circle..." required></textarea>
+                <textarea name="PostText" class="create-post-textarea" rows="4" placeholder="Share something with your circle..." required></textarea>
             </div>
         </div>
         <div class="create-post-footer">
@@ -44,7 +44,7 @@
         {
             <div class="post-box post-card">
                 <div class="post-header">
-                    <div class="post-user-info">
+                    <a asp-controller="User" asp-action="ViewProfile" asp-route-id="@post.UserId" class="post-user-info">
                         <div class="post-avatar-box">
                             @if (!string.IsNullOrEmpty(post.ProfilePicUrl))
                             {
@@ -59,7 +59,7 @@
                             <h6 class="post-username">@($"@{post.UserName}")</h6>
                             <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy")</span>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="post-content">
@@ -68,10 +68,10 @@
 
                 <div class="post-footer-actions">
                     <button class="action-btn">
-                        <i class="fa-regular fa-heart"></i> <span>4</span>
+                        <i class="fa-regular fa-heart"></i> <span>@post.LikesCount</span>
                     </button>
                     <button class="action-btn">
-                        <i class="fa-regular fa-comment"></i> <span>2</span>
+                        <i class="fa-regular fa-comment"></i> <span>@post.CommentsCount</span>
                     </button>
                 </div>
             </div>

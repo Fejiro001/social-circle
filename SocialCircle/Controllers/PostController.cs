@@ -28,7 +28,7 @@ namespace SocialCircle.Controllers
                 PostText = p.PostText,
                 Timestamp = p.Timestamp,
                 UserId = p.UserId,
-                UserName = p.User?.UserName ?? "User",
+                UserName = p.User.UserName,
                 ProfilePicUrl = p.User?.ProfilePicUrl,
                 LikesCount = _postService.GetLikesCount(p.PostId),
                 CommentsCount = _postService.GetCommentsCount(p.PostId)

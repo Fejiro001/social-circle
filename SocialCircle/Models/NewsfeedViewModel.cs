@@ -2,7 +2,7 @@
 {
     public class NewsfeedViewModel
     {
-        public List<FeedPostViewModel> Posts { get; set; } = new();
-        public User CurrentUser { get; set; }
+        public List<FeedPostViewModel> Posts { get; set; } = new List<FeedPostViewModel>();
+        public required User CurrentUser { get; set; }
     }
 }

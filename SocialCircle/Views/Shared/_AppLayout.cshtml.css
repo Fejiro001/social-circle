@@ -124,9 +124,9 @@
     gap: 0.75rem;
 }
 
-    .sidebar-nav-item:hover {
-        background-color: #f8f9fa;
-    }
+.sidebar-nav-item:hover {
+    background-color: #f8f9fa;
+}
 
 .sidebar-footer-account {
     margin-top: auto;
@@ -176,16 +176,14 @@
     flex: 0 0 100%;
     max-width: 100%;
     padding: 1.5rem 0.75rem;
-    border-right: 1px solid #dee2e6;
     min-height: 100vh;
 }
 
 @media (min-width: 768px) {
     .main-content-feed {
-        flex: 0 0 75%;
-        max-width: 75%;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding-inline: 1.5rem;
     }
 }
 

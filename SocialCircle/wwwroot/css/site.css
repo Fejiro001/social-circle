@@ -1,11 +1,12 @@
 /* wwwroot/css/site.css */
 :root {
     --bg-card: #f8fafc;
-    --bg-main: #ffffff;
+    --bg-main: #f7f7fb;
     --text-primary: #0f172a;
     --text-muted: #64748b;
     --border-color: #B3B4B7;
     --border-light: #f1f5f9;
+    --accent-primary-light: #ede9fe;
     --accent-primary: #6366f1;
     --accent-primary-hover: #4f46e5;
     --accent-info: #0ea5e9;
@@ -307,4 +308,169 @@ textarea.input-validation-error:focus {
     color: #6c757d;
     text-align: center;
     margin: 12px 0 0 0;
+}
+
+
+/* Users Stories Section */
+.story-feed-container {
+    display: flex;
+    gap: 15px;
+    padding: 20px 0;
+    overflow-x: auto;
+}
+
+.story-bubble {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    justify-content: space-between;
+}
+
+/* --- Add Story Button --- */
+.add-story .add-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px dashed #cbd5e1;
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.add-story .add-btn:hover {
+    background-color: #e2e8f0;
+    border-color: #94a3b8;
+}
+
+.avatar-ring {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-primary);
+    background-color: var(--accent-primary-light);
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+.img-circle-fit {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.story-author {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Story Modal */
+.story-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.story-modal-card {
+    background: #fff;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.story-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.story-meta {
+    flex-grow: 1;
+}
+
+.author-name {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-primary);
+}
+
+.story-time {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.close-btn {
+    font-size: 1.5rem;
+    color: #999;
+    text-decoration: none;
+}
+
+.story-body {
+    padding: 20px 0;
+    text-align: center;
+}
+
+.story-footer {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 10px;
+}
+
+.view-count-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* --- Custom Story Modal Card Overrides --- */
+.custom-modal-card {
+    background: #fff;
+    border-radius: 16px;
+    border: none;
+    padding: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.story-textarea {
+    resize: none;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 12px;
+    font-size: 0.95rem;
+}
+
+.story-textarea:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.post-story-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 8px;
 }

@@ -15,6 +15,29 @@
             <p class="sc-empty-text">No active conversations found. Start a chat to begin!</p>
         }
 
+        @foreach (var thread in Model)
+        {
+            <!-- click target linking straight to the targeted chat log -->
+            <a asp-action="ViewChat" asp-route-targetUserId="@thread.TargetUserId" class="sc-thread-row">
+                <div class="sc-thread-avatar-col">
+                    <img src="@thread.TargetAvatar" class="sc-inbox-avatar" alt="Avatar" />
+                </div>
 
+                <div class="sc-thread-details-col">
+                    <div class="sc-thread-meta-row">
+                        <span class="sc-thread-username">@thread.TargetUserName</span>
+                        <span class="sc-thread-time">@thread.LastMessageTimestamp.ToString("MMM dd, HH:mm")</span>
+                    </div>
+
+                    <div class="sc-thread-preview-row">
+                        <p class="sc-message-preview">@thread.LastMessageText</p>
+                        @if (thread.IsUnread)
+                        {
+                            <span class="sc-badge-unread">New</span>
+                        }
+                    </div>
+                </div>
+            </a>
+        }
     </div>
 </div>

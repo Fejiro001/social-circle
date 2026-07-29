@@ -89,13 +89,13 @@
                             </div>
                             <div class="post-author-meta">
                                 <span class="post-username">@($"@{Model.User.UserName}")</span>
-                                <span class="post-timestamp">@post.Timestamp.ToString("g")</span>
+                                <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy HH:mm tt")</span>
                             </div>
                         </div>
 
-                        <div class="post-body">
-                            <p>@post.PostText</p>
-                        </div>
+                        <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId" class="post-content">
+                            <p class="post-text">@post.PostText</p>
+                        </a>
 
                         <div class="post-footer-metrics">
                             <span><i class="fa-regular fa-heart"></i> @post.LikesCount</span>

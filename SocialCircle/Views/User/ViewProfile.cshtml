@@ -98,7 +98,21 @@
                         </a>
 
                         <div class="post-footer-metrics">
-                            <span><i class="fa-regular fa-heart"></i> @post.LikesCount</span>
+                            <!-- Like Form -->
+                            <form asp-controller="Post" asp-action="ToggleLike" asp-route-postId="@post.PostId" method="post" class="like-form">
+                                <button type="submit" class="action-btn @(post.HasCurrentUserLiked ? "liked" : "")">
+                                    @if (post.HasCurrentUserLiked)
+                                    {
+                                        <i class="fa-solid fa-heart text-danger"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-regular fa-heart"></i>
+                                    }
+                                    <span>@post.LikesCount</span>
+                                </button>
+                            </form>
+
                             <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId"><i class="fa-regular fa-comment text-secondary"></i> @post.CommentsCount</a>
                         </div>
                     </div>

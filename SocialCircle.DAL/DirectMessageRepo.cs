@@ -1,4 +1,5 @@
-﻿using SocialCircle.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SocialCircle.Models;
 
 namespace SocialCircle.DAL
 {
@@ -17,19 +18,21 @@ namespace SocialCircle.DAL
             _context.SaveChanges();
         }
 
-        public List<DirectMessage> FetchConversation(int userA, int userB)
+        public IQueryable<DirectMessage> FetchConversation(int userA, int userB)
         {
             return _context.DirectMessages
+                .Include(m => m.Sender)
+                .Include(m => m.Receiver)
                 .Where(m => (m.SenderId == userA && m.ReceiverId == userB) ||
-                            (m.SenderId == userB && m.ReceiverId == userA))
-                .ToList();
+                            (m.SenderId == userB && m.ReceiverId == userA));
         }
 
-        public List<DirectMessage> FetchAllUserMessages(int userId)
+        public IQueryable<DirectMessage> FetchAllUserMessages(int userId)
         {
             return _context.DirectMessages
-                .Where(m => m.SenderId == userId || m.ReceiverId == userId)
-                .ToList();
+                .Include(m => m.Sender)
+                .Include(m => m.Receiver)
+                .Where(m => m.SenderId == userId || m.ReceiverId == userId);
         }
     }
 }

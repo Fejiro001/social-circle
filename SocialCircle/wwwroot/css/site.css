@@ -756,8 +756,10 @@ textarea.input-validation-error:focus {
     }
 }
 
-.post-text{
+.post-text {
     padding-block: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
 }
 
 .action-btn {

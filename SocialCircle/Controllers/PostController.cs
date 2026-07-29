@@ -5,7 +5,7 @@ using SocialCircle.Models;
 
 namespace SocialCircle.Controllers
 {
-    public class PostController : Controller
+    public class PostController : BaseController
     {
         private readonly PostService _postService;
         private readonly PostLikeService _postLikeService;
@@ -74,21 +74,7 @@ namespace SocialCircle.Controllers
             int currentUserId = CurrentUser.Id;
             _postLikeService.ToggleLike(postId, currentUserId);
 
-            // Safely return back to Feed, Profile, or Detail view after liking a post
-            string referer = Request.Headers.Referer.ToString();
-
-            if (!string.IsNullOrEmpty(referer))
-            {
-                Uri uri = new Uri(referer);
-                string relativePath = uri.PathAndQuery;
-
-                if (Url.IsLocalUrl(relativePath))
-                {
-                    return Redirect(relativePath);
-                }
-            }
-
-            return RedirectToAction("Index");
+            return RedirectToPreviousPage();
         }
 
         [HttpGet]

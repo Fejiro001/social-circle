@@ -5,7 +5,7 @@ using SocialCircle.Models;
 
 namespace SocialCircle.Controllers
 {
-    public class PostController : Controller
+    public class PostController : BaseController
     {
         private readonly PostService _postService;
         private readonly PostLikeService _postLikeService;
@@ -74,21 +74,7 @@ namespace SocialCircle.Controllers
             int currentUserId = CurrentUser.Id;
             _postLikeService.ToggleLike(postId, currentUserId);
 
-            // Safely return back to Feed, Profile, or Detail view
-            string referer = Request.Headers.Referer.ToString();
-
-            if (!string.IsNullOrEmpty(referer))
-            {
-                Uri uri = new Uri(referer);
-                string relativePath = uri.PathAndQuery;
-
-                if (Url.IsLocalUrl(relativePath))
-                {
-                    return Redirect(relativePath);
-                }
-            }
-
-            return RedirectToAction("Index");
+            return RedirectToPreviousPage();
         }
 
         [HttpGet]
@@ -101,6 +87,7 @@ namespace SocialCircle.Controllers
 
             var rawComments = _commentService.GetPostComments(id);
 
+            // Get all comments info for a post
             var commentVM = rawComments.Select(c => new CommentViewModel
             {
                 CommentId = c.CommentId,
@@ -108,16 +95,13 @@ namespace SocialCircle.Controllers
                 AuthorName = c.User.UserName,
                 Timestamp = c.Timestamp
             }).ToList();
-
+            
             var vm = new PostDetailsViewModel
             {
                 Post = post,
-                Interactions = new PostInteractionsViewModel
-                {
-                    TotalLikes = _postLikeService.GetTotalLikes(id),
-                    HasCurrentUserLiked = _postLikeService.HasCurrentUserLiked(id, currentUserId),
-                    Comments = commentVM
-                }
+                TotalLikes = _postLikeService.GetTotalLikes(id),
+                HasCurrentUserLiked = _postLikeService.HasCurrentUserLiked(id, currentUserId),
+                Comments = commentVM
             };
 
             return View(vm);

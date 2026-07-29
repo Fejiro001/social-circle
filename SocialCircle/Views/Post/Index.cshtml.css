@@ -63,12 +63,6 @@
     margin-bottom: .5rem;
 }
 
-.post-text {
-    padding-block: 1rem;
-    color: var(--text-muted);
-    margin-bottom: 0;
-}
-
 .post-footer-actions {
     display: flex;
     color: #6c757d;

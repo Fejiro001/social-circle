@@ -114,13 +114,6 @@
     margin-bottom: 1.5rem;
 }
 
-.post-text {
-    margin: 0;
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    line-height: 1;
-}
-
 /* Rounded comment pills matching the screenshot */
 .comment-pill {
     background-color: #f8fafc;

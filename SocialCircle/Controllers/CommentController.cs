@@ -4,7 +4,7 @@ using SocialCircle.Helpers;
 
 namespace SocialCircle.Controllers
 {
-    public class CommentController : Controller
+    public class CommentController : BaseController
     {
         private readonly CommentService _commentService;
 
@@ -35,25 +35,6 @@ namespace SocialCircle.Controllers
             _commentService.RemoveComment(commentId);
 
             return RedirectToPreviousPage();
-        }
-
-        // Reusable helper to move the user back to the exact page they came from
-        private IActionResult RedirectToPreviousPage()
-        {
-            string referer = Request.Headers.Referer.ToString();
-
-            if (!string.IsNullOrEmpty(referer))
-            {
-                Uri uri = new Uri(referer);
-                string relativePath = uri.PathAndQuery;
-
-                if (Url.IsLocalUrl(relativePath))
-                {
-                    return Redirect(relativePath);
-                }
-            }
-
-            return RedirectToAction("Index", "Post");
         }
     }
 }

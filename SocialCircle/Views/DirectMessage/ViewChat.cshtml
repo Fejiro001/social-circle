@@ -32,16 +32,22 @@
 
     <!-- MESSAGE STREAM -->
     <div class="chat-message-stream" id="chatStream">
-        @foreach (var msg in Model.Messages)
+        @if (Model.Messages != null && Model.Messages.Any())
         {
-            bool isSentByMe = msg.SenderId == Model.CurrentUserId;
+            @foreach (var msg in Model.Messages)
+            {
+                bool isSentByMe = msg.SenderId == Model.CurrentUserId;
 
-            <div class="chat-message-row @(isSentByMe ? "chat-msg-sent" : "chat-msg-received")">
-                <div class="chat-bubble">
-                    <p class="chat-bubble-text">@msg.MessageText</p>
-                    <span class="chat-bubble-time">@msg.Timestamp.ToString("MMM dd yyyy, HH:mm:ss tt")</span>
+                <div class="chat-message-row @(isSentByMe ? "chat-msg-sent" : "chat-msg-received")">
+                    <div class="chat-bubble">
+                        <p class="chat-bubble-text">@msg.MessageText</p>
+                        <span class="chat-bubble-time">@msg.Timestamp.ToString("MMM dd yyyy, HH:mm:ss tt")</span>
+                    </div>
                 </div>
-            </div>
+            }
+        } else
+        {
+            <p class="chat-empty-text">-- Start a new chat --</p>
         }
     </div>
 

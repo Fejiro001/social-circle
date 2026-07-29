@@ -5,17 +5,19 @@ using SocialCircle.Models;
 
 namespace SocialCircle.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly UserService _userService;
         private readonly UserFollowService _followService;
         private readonly PostService _postService;
+        private readonly PostLikeService _postLikeService;
 
-        public UserController(UserService service, UserFollowService followService, PostService postService)
+        public UserController(UserService service, UserFollowService followService, PostService postService, PostLikeService postLikeService)
         {
             _userService = service;
             _followService = followService;
             _postService = postService;
+            _postLikeService = postLikeService;
         }
 
 
@@ -41,7 +43,8 @@ namespace SocialCircle.Controllers
                 UserName = profile.User.UserName,
                 ProfilePicUrl = profile.User.ProfilePicUrl,
                 LikesCount = _postService.GetLikesCount(p.PostId),
-                CommentsCount = _postService.GetCommentsCount(p.PostId)
+                CommentsCount = _postService.GetCommentsCount(p.PostId),
+                HasCurrentUserLiked = _postLikeService.HasCurrentUserLiked(p.PostId, currentUserId)
             }).ToList();
 
             UserProfileViewModel vm = new UserProfileViewModel
@@ -77,23 +80,8 @@ namespace SocialCircle.Controllers
 
                 _followService.FollowUser(newFollow);
             }
-            // Browser sends a Referer header telling the server, the user was just looking at this specific web address.
-            // Capture the page the user came from automatically
-            string referer = Request.Headers.Referer.ToString();
 
-            if (!string.IsNullOrEmpty(referer))
-            {
-                // Convert it to a relative path. So instead of for example, 'https://localhost:7195/User/Followers/1'
-                // It will be '/User/Followers/1'
-                Uri uri = new Uri(referer);
-                string relativePath = uri.PathAndQuery;
-
-                if (Url.IsLocalUrl(relativePath))
-                {
-                    return Redirect(relativePath);
-                }
-            }
-            return RedirectToAction("Index", "Post");
+            return RedirectToPreviousPage();
         }
 
         [HttpGet]

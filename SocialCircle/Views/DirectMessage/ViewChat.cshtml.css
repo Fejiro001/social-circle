@@ -126,3 +126,8 @@
 .chat-msg-received .chat-bubble-time {
     color: #9ca3af;
 }
+
+.chat-empty-text {
+    color: #9ca3af;
+    text-align: center;
+}

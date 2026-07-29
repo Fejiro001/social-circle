@@ -5,6 +5,10 @@ using SocialCircle.Models;
 
 namespace SocialCircle.ViewComponents
 {
+    // Used a ViewComponent instead of a Controller + Partial View.
+    // The Sidebar requires its own data fetching logic and model,
+    // to display the user in the sidebar
+    // but is rendered as a reusable, self-contained UI component.
     public class SidebarAccountViewComponent : ViewComponent
     {
         private readonly UserService _userService;

@@ -1,95 +1,43 @@
-﻿@model SocialCircle.Models.DirectMessagesViewModel
+﻿@model IEnumerable<SocialCircle.Models.InboxViewModel>
 
 @{
     Layout = "_AppLayout";
     ViewData["Title"] = "Direct Messages";
 }
 
-<h2 class="page-title">Direct Messages</h2>
+<div class="inbox-wrapper">
+    <h2 class="inbox-page-title">Direct Messages</h2>
 
-<div class="dm-layout-card">
-    <!-- LEFT PANEL: Conversations List -->
-    <div class="dm-sidebar">
-        <div class="dm-sidebar-header">
-            <span class="sidebar-title">Conversations</span>
+    <div class="inbox-card">
+        <div class="inbox-header">
+            <h3 class="inbox-header-title">Conversations</h3>
         </div>
 
-        <div class="dm-thread-list">
-            @if (!Model.Inbox.Any())
+        <div class="inbox-thread-list">
+            @if (!Model.Any())
             {
-                <p class="dm-empty-text">No active conversations found.</p>
+                <p class="inbox-empty-text">No active conversations found.</p>
             }
 
-            @foreach (var thread in Model.Inbox)
+            @foreach (var thread in Model)
             {
-                <!-- Check if this thread is the currently active one to apply the highlighted background -->
-                bool isActive = Model.ActiveChat?.TargetUserId == thread.TargetUserId;
-
-                <a asp-action="Index" asp-route-targetUserId="@thread.TargetUserId" class="dm-thread-row @(isActive ? "active-thread" : "")">
-                    <div class="dm-avatar-box">
-                        <img src="@thread.TargetAvatar" class="dm-avatar-fit" alt="Profile Picture" />
+                <a asp-action="ViewChat" asp-route-targetUserId="@thread.TargetUserId" class="inbox-thread-row">
+                    <div class="inbox-avatar-box">
+                        @if (!string.IsNullOrEmpty(thread.TargetAvatar))
+                        {
+                            <img src="@thread.TargetAvatar" class="inbox-avatar-fit" alt="Profile Picture" />
+                        }
+                        else
+                        {
+                            <span class="inbox-avatar-initial">@thread.TargetUserName.Substring(0, 1).ToUpper()</span>
+                        }
                     </div>
-                    <div class="dm-details-column">
-                        <span class="dm-username">@thread.TargetUserName</span>
-                        <span class="dm-preview-text">@(string.IsNullOrEmpty(thread.LastMessageText) ? "Start a conversation" : thread.LastMessageText)</span>
+                    <div class="inbox-details-column">
+                        <span class="inbox-username">@@@thread.TargetUserName</span>
+                        <span class="inbox-preview-text">@(string.IsNullOrEmpty(thread.LastMessageText) ? "Start a conversation" : thread.LastMessageText)</span>
                     </div>
                 </a>
             }
         </div>
     </div>
-
-    <!-- RIGHT PANEL: Active Chat Stream -->
-    <div class="dm-main-chat">
-        @if (Model.ActiveChat != null)
-        {
-            <div class="chat-header">
-                <div class="dm-avatar-box">
-                    <img src="@Model.ActiveChat.TargetAvatar" class="dm-avatar-fit" alt="Profile" />
-                </div>
-                <div class="chat-header-info">
-                    <h4 class="chat-header-username">@Model.ActiveChat.TargetUserName</h4>
-                    <span class="chat-header-location">Winnipeg, MB</span>
-                </div>
-            </div>
-
-            <div class="chat-message-stream" id="chatStream">
-                @foreach (var msg in Model.ActiveChat.Messages)
-                {
-                    bool isSentByMe = msg.SenderId == Model.ActiveChat.CurrentUserId;
-
-                    <div class="chat-message-row @(isSentByMe ? "chat-msg-sent" : "chat-msg-received")">
-                        <div class="chat-bubble">
-                            <p class="chat-bubble-text">@msg.MessageText</p>
-                            <span class="chat-bubble-time">@msg.Timestamp.ToString("M/d/yyyy, h:mm:ss tt")</span>
-                        </div>
-                    </div>
-                }
-            </div>
-
-            <div class="chat-input-panel">
-                <form asp-action="SendMessage" method="post" class="chat-input-form">
-                    <input type="hidden" name="ReceiverId" value="@Model.ActiveChat.TargetUserId" />
-                    <input type="text" name="MessageText" class="chat-textbox" placeholder="Type a message..." required autocomplete="off" />
-                    <button type="submit" class="chat-submit-btn">
-                        <i class="fa-regular fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        }
-        else
-        {
-            <div class="chat-empty-state">
-                <p>Select a conversation from the left to start chatting.</p>
-            </div>
-        }
-    </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var chatStream = document.getElementById("chatStream");
-        if (chatStream) {
-            chatStream.scrollTop = chatStream.scrollHeight;
-        }
-    });
-</script>

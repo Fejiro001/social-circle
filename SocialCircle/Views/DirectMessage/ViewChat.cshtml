@@ -4,43 +4,61 @@
     Layout = "_AppLayout";
     ViewData["Title"] = "Chat with " + Model.TargetUserName;
 }
-<!-- shows who you are talking to -->
-<div class="chat-interface-card">
-    <div class="chat-interface-header">
-        <h4 class="chat-interface-title">Chatting with: @Model.TargetUserName</h4>
-    </div>
-    <!-- Chronological message ordering -->
-    <div class="chat-message-stream" id="chatStream">
-        @if (!Model.Messages.Any())
-        {
-            <p class="dm-empty-text text-center mt-4">No past messages. Say hello to start the conversation!</p>
-        }
 
+<div class="chat-interface-card">
+
+    <!-- HEADER -->
+    <div class="chat-interface-header">
+        <a asp-action="Index" class="chat-back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <div class="dm-avatar-box">
+            @if (!string.IsNullOrEmpty(Model.TargetAvatar))
+            {
+                <img src="@Model.TargetAvatar" class="dm-avatar-fit" alt="Profile" />
+            }
+            else
+            {
+                <span class="profile-avatar-initial">@Model.TargetUserName.Substring(0, 1).ToUpper()</span>
+            }
+        </div>
+
+        <div class="chat-header-info">
+            <h4 class="chat-interface-title">@($"@{Model.TargetUserName}")</h4>
+            <span class="chat-header-location">Winnipeg, MB</span>
+        </div>
+    </div>
+
+    <!-- MESSAGE STREAM -->
+    <div class="chat-message-stream" id="chatStream">
         @foreach (var msg in Model.Messages)
         {
-            string placementSide = (msg.SenderId == Model.CurrentUserId) ? "chat-msg-sent" : "chat-msg-received";
-            // Separates messages left and right based on sender
-            <div class="chat-message-row @placementSide">
+            bool isSentByMe = msg.SenderId == Model.CurrentUserId;
+
+            <div class="chat-message-row @(isSentByMe ? "chat-msg-sent" : "chat-msg-received")">
                 <div class="chat-bubble">
                     <p class="chat-bubble-text">@msg.MessageText</p>
-                    <span class="chat-bubble-time">@msg.Timestamp.ToString("HH:mm")</span>
+                    <span class="chat-bubble-time">@msg.Timestamp.ToString("MMM dd yyyy, HH:mm:ss tt")</span>
                 </div>
             </div>
         }
     </div>
-    <!-- Message submission form -->
+
+    <!-- INPUT PANEL -->
     <div class="chat-input-panel">
         <form asp-action="SendMessage" method="post" class="chat-input-form">
             <input type="hidden" name="ReceiverId" value="@Model.TargetUserId" />
-
-            <input type="text" name="MessageText" class="form-control chat-textbox" placeholder="Type a message..." required autocomplete="off" maxlength="1000" />
-            <button type="submit" class="btn-primary chat-submit-btn">Send</button>
+            <input type="text" name="MessageText" class="chat-textbox" placeholder="Type a message..." required autocomplete="off" />
+            <button type="submit" class="chat-submit-btn">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
         </form>
     </div>
 </div>
-<!-- will automatically scroll to the newest text at the bottom -->
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         var chatStream = document.getElementById("chatStream");
         if (chatStream) {
             chatStream.scrollTop = chatStream.scrollHeight;

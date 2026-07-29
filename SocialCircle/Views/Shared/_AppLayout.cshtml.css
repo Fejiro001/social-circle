@@ -103,15 +103,9 @@
 }
 
 .main-content-feed {
-    flex: 0 0 65%;
-    max-width: 65%;
+    width: 100%;
     padding: 1.5rem 1rem;
     min-height: 100vh;
-}
-
-.main-content-feed.full-width-content {
-    flex: 1;
-    max-width: 80%;
 }
 
 @media (min-width: 768px) {

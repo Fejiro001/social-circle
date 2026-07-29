@@ -32,10 +32,12 @@
                                 @(Model.IsCurrentlyFollowing ? "Following" : "Follow")
                             </button>
                         </form>
-                    }
-                    else
-                    {
-                        <a asp-controller="Profile" asp-action="Edit" class="btn btn-outline-dark rounded-pill px-4 font-weight-bold">Edit Profile</a>
+
+                        <!-- Message Button -->
+                        <a asp-controller="DirectMessage" asp-action="ViewChat" asp-route-targetUserId="@Model.User.UserId"
+                           class="follow-action-btn msg-btn">
+                            <i class="fa-regular fa-envelope"></i> Message
+                        </a>
                     }
                 </div>
             </div>

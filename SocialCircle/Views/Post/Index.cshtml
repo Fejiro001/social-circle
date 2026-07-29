@@ -8,6 +8,8 @@
 @* Display all active stories *@
 @await Component.InvokeAsync("StoryFeed")
 
+<div id="modal-container"></div>
+
 <div class="create-post-card">
     <form asp-controller="Post" asp-action="CreatePost" method="post">
         <div class="create-post-form-row">
@@ -98,3 +100,19 @@
         </div>
     }
 </div>
+
+<script>
+    function openStoryModal(storyId) {
+        fetch(`/Post/ViewStory/${storyId}`)
+            .then(response => response.text())
+            .then(html => {
+                // Load the modal HTML into the container
+                document.getElementById('modal-container').innerHTML = html;
+
+                // Initialize and show the Bootstrap modal
+                var storyModal = new bootstrap.Modal(document.getElementById('storyModal'));
+                storyModal.show();
+            })
+            .catch(err => console.error('Error loading story:', err));
+    }
+</script>

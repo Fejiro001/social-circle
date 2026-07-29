@@ -187,3 +187,10 @@
     gap: 0.4rem;
     cursor: pointer;
 }
+
+.profile-action-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}

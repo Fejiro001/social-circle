@@ -109,6 +109,11 @@
     min-height: 100vh;
 }
 
+.main-content-feed.full-width-content {
+    flex: 1;
+    max-width: 80%;
+}
+
 @media (min-width: 768px) {
     .main-content-feed {
         flex: 0 0 100%;

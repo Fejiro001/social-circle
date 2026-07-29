@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    bool hideSidebar = ViewData["HideRightSidebar"] as bool? ?? false;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -51,13 +55,16 @@
             </nav>
 
             <div class="feed-aside-wrapper">
-                <main class="main-content-feed" role="main">
+                <main class="main-content-feed @(hideSidebar ? "full-width-content" : "")" role="main">
                     @RenderBody()
                 </main>
 
-                <aside class="desktop-aside-widgets">
-                    @await Component.InvokeAsync("SuggestedUsers")
-                </aside>
+                @if (!hideSidebar)
+                {
+                    <aside class="desktop-aside-widgets">
+                        @await Component.InvokeAsync("SuggestedUsers")
+                    </aside>
+                }
             </div>
         </div>
     </div>

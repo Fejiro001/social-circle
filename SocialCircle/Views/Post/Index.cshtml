@@ -5,13 +5,6 @@
     ViewData["Title"] = "Home Feed";
 }
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="error-alert" role="alert">
-        @TempData["ErrorMessage"]
-    </div>
-}
-
 @* Display all active stories *@
 @await Component.InvokeAsync("StoryFeed")
 
@@ -29,9 +22,15 @@
                 }
             </div>
             <div class="create-post-textarea-container">
-                <textarea name="PostText" class="create-post-textarea" rows="4" placeholder="Share something with your circle..." required></textarea>
+                <textarea name="PostText" class="create-post-textarea" rows="4" placeholder="Share something with your circle..."></textarea>
             </div>
         </div>
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="text-danger small">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
         <div class="create-post-footer">
             <button type="submit" class="btn-primary submit-post-btn">Post</button>
         </div>

@@ -1,4 +1,6 @@
-﻿namespace SocialCircle.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SocialCircle.Models
 {
     public class FeedPostViewModel
     {

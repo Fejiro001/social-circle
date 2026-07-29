@@ -48,8 +48,6 @@ namespace SocialCircle.Controllers
             }
 
             _storyService.CreateStory(currentUserId, storyContent);
-
-            TempData["SuccessMessage"] = "Story successfully posted!";
             return RedirectToAction("Index", "Post");
         }
     }

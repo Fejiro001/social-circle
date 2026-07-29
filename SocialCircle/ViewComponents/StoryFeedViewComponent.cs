@@ -4,6 +4,9 @@ using SocialCircle.Models;
 
 namespace SocialCircle.ViewComponents
 {
+    // Used a ViewComponent instead of a Controller + Partial View.
+    // The Story Feed requires its own data fetching logic and model, 
+    // but is rendered as a reusable, self-contained UI component.
     public class StoryFeedViewComponent : ViewComponent
     {
         private readonly StoryService _storyService;

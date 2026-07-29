@@ -5,6 +5,10 @@ using SocialCircle.Models;
 
 namespace SocialCircle.ViewComponents
 {
+    // Used a ViewComponent instead of a Controller + Partial View.
+    // The Suggested Users requires its own data fetching logic and model, 
+    // but is rendered as a reusable, self-contained UI component
+    // to display users and follow/unfollow users
     public class SuggestedUsersViewComponent : ViewComponent
     {
         private readonly UserService _userService;

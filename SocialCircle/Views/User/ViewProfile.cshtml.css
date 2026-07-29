@@ -194,3 +194,16 @@
     gap: 10px;
     margin-left: auto;
 }
+
+/* Post Like */
+.like-form {
+    display: inline;
+    margin: 0;
+}
+
+.action-btn.liked {
+    i, span {
+        color: #ef4444;
+        font-weight: 600;
+    }
+}

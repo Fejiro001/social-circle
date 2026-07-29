@@ -10,12 +10,14 @@ namespace SocialCircle.Controllers
         private readonly UserService _userService;
         private readonly UserFollowService _followService;
         private readonly PostService _postService;
+        private readonly PostLikeService _postLikeService;
 
-        public UserController(UserService service, UserFollowService followService, PostService postService)
+        public UserController(UserService service, UserFollowService followService, PostService postService, PostLikeService postLikeService)
         {
             _userService = service;
             _followService = followService;
             _postService = postService;
+            _postLikeService = postLikeService;
         }
 
 
@@ -41,7 +43,8 @@ namespace SocialCircle.Controllers
                 UserName = profile.User.UserName,
                 ProfilePicUrl = profile.User.ProfilePicUrl,
                 LikesCount = _postService.GetLikesCount(p.PostId),
-                CommentsCount = _postService.GetCommentsCount(p.PostId)
+                CommentsCount = _postService.GetCommentsCount(p.PostId),
+                HasCurrentUserLiked = _postLikeService.HasCurrentUserLiked(p.PostId, currentUserId)
             }).ToList();
 
             UserProfileViewModel vm = new UserProfileViewModel

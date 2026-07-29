@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SocialCircle.Models
+﻿namespace SocialCircle.Models
 {
     public class CreateCommentViewModel
     {

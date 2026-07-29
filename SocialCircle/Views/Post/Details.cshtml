@@ -1,0 +1,81 @@
+﻿@model SocialCircle.Models.PostDetailsViewModel
+
+@{
+    Layout = "_AppLayout";
+    ViewData["Title"] = $"{Model.Post.User?.UserName}'s Post";
+}
+
+<div class="post-details-wrapper">
+    <!-- Back to feed link -->
+    <a asp-controller="Post" asp-action="Index" class="back-link mb-3">
+        <i class="fa-solid fa-arrow-left"></i> Back to feed
+    </a>
+
+    <div class="post-box post-card">
+        <!-- Post Header -->
+        <div class="post-header">
+            <a asp-controller="User" asp-action="ViewProfile" asp-route-id="@Model.Post.UserId" class="post-user-info">
+                <div class="post-avatar-box">
+                    @if (!string.IsNullOrEmpty(Model.Post.User?.ProfilePicUrl))
+                    {
+                        <img src="@Model.Post.User.ProfilePicUrl" alt="Profile picture" class="img-circle-fit" />
+                    }
+                    else
+                    {
+                        <span>@(Model.Post.User?.UserName?.Substring(0, 1).ToUpper() ?? "U")</span>
+                    }
+                </div>
+                <div>
+                    <h6 class="post-username">@($"@{Model.Post.User?.UserName}")</h6>
+                    <span class="post-timestamp">@Model.Post.Timestamp.ToString("MMM dd, yyyy, HH:mm tt")</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Post Content -->
+        <div class="post-content-body">
+            <p class="post-text">@Model.Post.PostText</p>
+        </div>
+
+        <!-- Like and Comment Count Stats Bar -->
+        <div class="post-interactions-bar">
+            <form asp-controller="Post" asp-action="ToggleLike" asp-route-postId="@Model.Post.PostId" method="post" class="d-inline">
+                <button type="submit" class="interaction-stat-btn @(Model.Interactions.HasCurrentUserLiked ? "liked" : "")">
+                    @if (Model.Interactions.HasCurrentUserLiked)
+                    {
+                        <i class="fa-solid fa-heart text-danger"></i>
+                    }
+                    else
+                    {
+                        <i class="fa-regular fa-heart"></i>
+                    }
+                    <span>@Model.Interactions.TotalLikes</span>
+                </button>
+            </form>
+            <div class="interaction-stat-btn">
+                <i class="fa-regular fa-comment"></i>
+                <span>@Model.Interactions.Comments.Count</span>
+            </div>
+        </div>
+
+        <!-- Add Comment Pill Input Form -->
+        <form asp-controller="Comment" asp-action="AddComment" method="post" class="comment-input-form">
+            <input type="hidden" name="PostId" value="@Model.Post.PostId" />
+            <input type="text" name="CommentText" class="comment-text-input" placeholder="Write a comment..." required autocomplete="off" />
+            <button type="submit" class="reply-btn">Reply</button>
+        </form>
+
+        <!-- Comments Section -->
+        <div class="comments-section">
+            <div class="comments-list">
+                @foreach (var comment in Model.Interactions.Comments)
+                {
+                    <div class="comment-pill">
+                        <span class="comment-author">@($"@{comment.AuthorName}")</span>
+                        <span class="comment-text-content">@comment.CommentText</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,10 @@
 ﻿@model SocialCircle.Models.StoryViewModel
 
+@{
+    Layout = "_AppLayout";
+    ViewData["Title"] = "Story View";
+}
+
 <div class="story-modal-overlay">
     <div class="story-modal-card view-story-card">
 
@@ -8,7 +13,7 @@
             <img src="@Model.AuthorAvatar" alt="@Model.AuthorName" class="modal-avatar" />
             <div class="story-meta">
                 <h4 class="author-name">@($"@{Model.AuthorName}")</h4>
-                <span class="story-time">@Model.Timestamp.ToString("g")</span>
+                <span class="story-time">@Model.Timestamp.ToString("MMM dd, yyyy ● HH:mm tt")</span>
             </div>
             <a asp-controller="Post" asp-action="Index" class="close-btn">&times;</a>
         </div>

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SocialCircle.Models.InboxViewModel>
+
+@{
+    Layout = "_AppLayout";
+    ViewData["Title"] = "Direct Messages";
+}
+
+<div class="inbox-wrapper">
+    <h2 class="inbox-page-title">Direct Messages</h2>
+
+    <div class="inbox-card">
+        <div class="inbox-header">
+            <h3 class="inbox-header-title">Conversations</h3>
+        </div>
+
+        <div class="inbox-thread-list">
+            @if (!Model.Any())
+            {
+                <p class="inbox-empty-text">No active conversations found.</p>
+            }
+
+            @foreach (var thread in Model)
+            {
+                <a asp-action="ViewChat" asp-route-targetUserId="@thread.TargetUserId" class="inbox-thread-row">
+                    <div class="inbox-avatar-box">
+                        @if (!string.IsNullOrEmpty(thread.TargetAvatar))
+                        {
+                            <img src="@thread.TargetAvatar" class="inbox-avatar-fit" alt="Profile Picture" />
+                        }
+                        else
+                        {
+                            <span class="inbox-avatar-initial">@thread.TargetUserName.Substring(0, 1).ToUpper()</span>
+                        }
+                    </div>
+                    <div class="inbox-details-column">
+                        <span class="inbox-username">@@@thread.TargetUserName</span>
+                        <span class="inbox-preview-text">@(string.IsNullOrEmpty(thread.LastMessageText) ? "Start a conversation" : thread.LastMessageText)</span>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</div>

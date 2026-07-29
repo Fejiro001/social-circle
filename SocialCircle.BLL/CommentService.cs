@@ -17,7 +17,7 @@ namespace SocialCircle.BLL
             return _commentRepo.FetchCommentsForPost(postId);
         }
 
-        public void AddComment(int postId, string commentText)
+        public void AddComment(int postId, int currentUserId, string commentText)
         {
             if (string.IsNullOrWhiteSpace(commentText))
             {
@@ -27,7 +27,7 @@ namespace SocialCircle.BLL
             Comment comment = new Comment
             {
                 PostId = postId,
-                UserId = 1, // Current logged-in user
+                UserId = currentUserId,
                 CommentText = commentText,
                 Timestamp = DateTime.Now
             };

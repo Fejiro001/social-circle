@@ -32,10 +32,12 @@
                                 @(Model.IsCurrentlyFollowing ? "Following" : "Follow")
                             </button>
                         </form>
-                    }
-                    else
-                    {
-                        <a asp-controller="Profile" asp-action="Edit" class="btn btn-outline-dark rounded-pill px-4 font-weight-bold">Edit Profile</a>
+
+                        <!-- Message Button -->
+                        <a asp-controller="DirectMessage" asp-action="ViewChat" asp-route-targetUserId="@Model.User.UserId"
+                           class="follow-action-btn msg-btn">
+                            <i class="fa-regular fa-envelope"></i> Message
+                        </a>
                     }
                 </div>
             </div>
@@ -53,8 +55,12 @@
                 }
 
                 <div class="profile-stats-row">
-                    <span><strong>@Model.FollowingCount</strong> Following</span>
-                    <span><strong>@Model.FollowersCount</strong> Followers</span>
+                    <a asp-controller="User" asp-action="Following" asp-route-id="@Model.User.UserId" class="profile-stat-link">
+                        <span>@Model.FollowingCount</span> Following
+                    </a>
+                    <a asp-controller="User" asp-action="Followers" asp-route-id="@Model.User.UserId" class="profile-stat-link">
+                        <span>@Model.FollowersCount</span> Followers
+                    </a>
                 </div>
             </div>
         </div>
@@ -92,8 +98,8 @@
                         </div>
 
                         <div class="post-footer-metrics">
-                            <span><i class="fa-regular fa-heart text-danger"></i> @post.LikesCount</span>
-                            <span><i class="fa-regular fa-comment text-secondary"></i> @post.CommentsCount</span>
+                            <span><i class="fa-regular fa-heart"></i> @post.LikesCount</span>
+                            <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId"><i class="fa-regular fa-comment text-secondary"></i> @post.CommentsCount</a>
                         </div>
                     </div>
                 }

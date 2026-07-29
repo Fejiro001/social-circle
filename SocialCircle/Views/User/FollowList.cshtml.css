@@ -1,0 +1,86 @@
+/* Follow List Page Layout */
+.follow-list-container {
+    max-width: 650px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Section Title */
+.follow-section-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #111827;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Cards Wrapper */
+.follow-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Individual User Card */
+.follow-user-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease;
+}
+
+.follow-user-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.follow-avatar-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #e5e7eb;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #4b5563;
+    flex-shrink: 0;
+}
+
+.follow-user-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+}
+
+.follow-username {
+    font-weight: 700;
+    color: #111827;
+    font-size: 0.95rem;
+}
+
+.follow-user-bio {
+    font-size: 0.85rem;
+    color: #6b7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Empty State Card */
+.empty-follow-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    text-align: center;
+}

@@ -5,14 +5,10 @@
     ViewData["Title"] = "Home Feed";
 }
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="error-alert" role="alert">
-        @TempData["ErrorMessage"]
-    </div>
-}
-
+@* Display all active stories *@
 @await Component.InvokeAsync("StoryFeed")
+
+<div id="modal-container"></div>
 
 <div class="create-post-card">
     <form asp-controller="Post" asp-action="CreatePost" method="post">
@@ -28,9 +24,15 @@
                 }
             </div>
             <div class="create-post-textarea-container">
-                <textarea name="PostText" class="create-post-textarea" rows="3" placeholder="Share something with your circle..." required></textarea>
+                <textarea name="PostText" class="create-post-textarea" rows="4" placeholder="Share something with your circle..."></textarea>
             </div>
         </div>
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="text-danger small">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
         <div class="create-post-footer">
             <button type="submit" class="btn-primary submit-post-btn">Post</button>
         </div>
@@ -44,7 +46,7 @@
         {
             <div class="post-box post-card">
                 <div class="post-header">
-                    <div class="post-user-info">
+                    <a asp-controller="User" asp-action="ViewProfile" asp-route-id="@post.UserId" class="post-user-info">
                         <div class="post-avatar-box">
                             @if (!string.IsNullOrEmpty(post.ProfilePicUrl))
                             {
@@ -57,22 +59,35 @@
                         </div>
                         <div>
                             <h6 class="post-username">@($"@{post.UserName}")</h6>
-                            <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy")</span>
+                            <span class="post-timestamp">@post.Timestamp.ToString("MMM dd, yyyy HH:mm tt")</span>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
-                <div class="post-content">
+                <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId" class="post-content">
                     <p class="post-text">@post.PostText</p>
-                </div>
+                </a>
 
                 <div class="post-footer-actions">
-                    <button class="action-btn">
-                        <i class="fa-regular fa-heart"></i> <span>4</span>
-                    </button>
-                    <button class="action-btn">
-                        <i class="fa-regular fa-comment"></i> <span>2</span>
-                    </button>
+                    <!-- Like Form -->
+                    <form asp-controller="Post" asp-action="ToggleLike" asp-route-postId="@post.PostId" method="post" class="like-form">
+                        <button type="submit" class="action-btn @(post.HasCurrentUserLiked ? "liked" : "")">
+                            @if (post.HasCurrentUserLiked)
+                            {
+                                <i class="fa-solid fa-heart text-danger"></i>
+                            }
+                            else
+                            {
+                                <i class="fa-regular fa-heart"></i>
+                            }
+                            <span>@post.LikesCount</span>
+                        </button>
+                    </form>
+
+                    <!-- Comment Link -->
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@post.PostId" class="action-btn">
+                        <i class="fa-regular fa-comment"></i> <span>@post.CommentsCount</span>
+                    </a>
                 </div>
             </div>
         }
@@ -85,3 +100,19 @@
         </div>
     }
 </div>
+
+<script>
+    function openStoryModal(storyId) {
+        fetch(`/Post/ViewStory/${storyId}`)
+            .then(response => response.text())
+            .then(html => {
+                // Load the modal HTML into the container
+                document.getElementById('modal-container').innerHTML = html;
+
+                // Initialize and show the Bootstrap modal
+                var storyModal = new bootstrap.Modal(document.getElementById('storyModal'));
+                storyModal.show();
+            })
+            .catch(err => console.error('Error loading story:', err));
+    }
+</script>

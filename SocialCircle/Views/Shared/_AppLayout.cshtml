@@ -15,10 +15,10 @@
             <img src="~/images/logo-small.svg" alt="Social Circle logo" class="header-logo-img" />
             <span class="header-title-text">Social Circle</span>
         </div>
-        <a asp-controller="Profile" asp-action="Index" class="header-profile-link">
-            <div class="header-avatar-circle">
-                O
-            </div>
+        <a asp-controller="User" asp-action="ViewProfile" class="header-profile-link">
+            <p>
+                My Profile
+            </p>
         </a>
     </header>
 
@@ -35,11 +35,11 @@
                         <i class="fa-regular fa-house"></i>
                         Home
                     </a>
-                    <a asp-controller="Message" asp-action="Index" class="sidebar-nav-item">
+                    <a asp-controller="DirectMessage" asp-action="Index" class="sidebar-nav-item">
                         <i class="fa-regular fa-comment"></i>
                         Messages
                     </a>
-                    <a asp-controller="Profile" asp-action="Index" class="sidebar-nav-item">
+                    <a asp-controller="User" asp-action="ViewProfile" class="sidebar-nav-item">
                         <i class="fa-regular fa-user"></i>
                         Profile
                     </a>
@@ -69,13 +69,13 @@
                 Home
             </div>
         </a>
-        <a asp-controller="Message" asp-action="Index" class="mobile-nav-link">
+        <a asp-controller="DirectMessage" asp-action="Index" class="mobile-nav-link">
             <div class="mobile-nav-content">
                 <i class="fa-regular fa-comment"></i>
                 Messages
             </div>
         </a>
-        <a asp-controller="Profile" asp-action="Index" class="mobile-nav-link">
+        <a asp-controller="User" asp-action="ViewProfile" class="mobile-nav-link">
             <div class="mobile-nav-content">
                 <i class="fa-regular fa-user"></i>
                 Profile

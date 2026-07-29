@@ -1,4 +1,6 @@
-﻿namespace SocialCircle.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SocialCircle.Models
 {
     public class FeedPostViewModel
     {
@@ -10,5 +12,6 @@
         public string ProfilePicUrl { get; set; }
         public int LikesCount { get; set; }
         public int CommentsCount { get; set; }
+        public bool HasCurrentUserLiked { get; set; }
     }
 }

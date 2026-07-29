@@ -36,9 +36,10 @@ namespace SocialCircle.BLL
         public List<DirectMessage> GetInboxSummaries(int currentUserId)
         {
             return _dmRepo.FetchAllUserMessages(currentUserId)
-                .GroupBy(m => m.SenderId == currentUserId ? m.ReceiverId : m.SenderId)
-                .Select(g => g.OrderByDescending(m => m.Timestamp).First())
                 .OrderByDescending(m => m.Timestamp)
+                .AsEnumerable() // EXECUTES SQL HERE and pulls the list into memory
+                .GroupBy(m => m.SenderId == currentUserId ? m.ReceiverId : m.SenderId)
+                .Select(g => g.First())
                 .ToList();
         }
     }

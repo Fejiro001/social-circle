@@ -29,11 +29,17 @@
 }
 
 .dm-avatar-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-primary-light);
     width: 45px;
     height: 45px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
+    font-weight: 700;
+    color: var(--text-muted);
 }
 
 .dm-avatar-fit {
